@@ -30,3 +30,6 @@ prog6-gaufre.jar
 
 # fichiers pomme
 .DS_Store
+
+# bin
+bin

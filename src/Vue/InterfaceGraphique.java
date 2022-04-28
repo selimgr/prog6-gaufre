@@ -1,4 +1,5 @@
 package Vue;
+
 import javax.swing.*;
 
 public class InterfaceGraphique implements Runnable {
@@ -19,6 +20,10 @@ public class InterfaceGraphique implements Runnable {
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.frame.setVisible(true);
         
-        this.frame.add(new JLabel("Miam"));
+        Box box = Box.createVerticalBox();
+        box.add(new JLabel("appétissant.."));
+        box.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg"))));
+
+        this.frame.add(box);
     }
 }

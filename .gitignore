@@ -32,4 +32,4 @@ prog6-gaufre.jar
 .DS_Store
 
 # bin
-bin
+bin/*

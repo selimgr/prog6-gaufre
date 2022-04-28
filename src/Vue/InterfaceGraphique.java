@@ -22,7 +22,7 @@ public class InterfaceGraphique implements Runnable {
         
         Box box = Box.createVerticalBox();
         box.add(new JLabel("appétissant.."));
-        box.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg"))));
+        box.add(new JLabel(new ImageIcon(getClass().getResource("/res/gaufre.jpg"))));
 
         this.frame.add(box);
     }

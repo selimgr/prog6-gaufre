@@ -27,3 +27,6 @@ hs_err_pid*
 
 # jar
 prog6-gaufre.jar
+
+# fichiers pomme
+.DS_Store

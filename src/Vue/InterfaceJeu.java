@@ -24,7 +24,7 @@ public class InterfaceJeu extends InterfaceGraphique {
         joueur.setOpaque(true);
         this.frame.add(joueur, BorderLayout.NORTH);
 
-        this.frame.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg")), SwingConstants.CENTER), BorderLayout.WEST);
+        //this.frame.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg")), SwingConstants.CENTER), BorderLayout.WEST);
 
 
         // Création des boutons

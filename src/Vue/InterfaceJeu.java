@@ -31,9 +31,8 @@ public class InterfaceJeu extends InterfaceGraphique {
         JButton start = createButton("Restart");
         JButton previous = createButton("Previous");
         JButton next = createButton("   Next    ");
+        JButton save = createButton("Save");
         JButton exit = createButton("Exit");
-        JButton load = createButton("Load game");
-        JButton save = createButton("Save game");
 
         // Panel où il y a les boutons
         JPanel panelButton = new JPanel();
@@ -51,7 +50,6 @@ public class InterfaceJeu extends InterfaceGraphique {
         b2.add(next);
         //Idem
         Box b3 = Box.createHorizontalBox();
-        b3.add(load);
         b3.add(save);
         //Idem
         Box b4 = Box.createHorizontalBox();
@@ -72,13 +70,6 @@ public class InterfaceJeu extends InterfaceGraphique {
         this.frame.setVisible(true);
     }
 
-    private JButton createButton(String s){
-        JButton button = new JButton(s);
-		button.setAlignmentX(Component.TOP_ALIGNMENT);
-		button.setPreferredSize(new Dimension(120, 50));
-		button.setFocusable(false);
-        return button;
-    }
 
     public void fermer() {
         this.frame.setVisible(false);

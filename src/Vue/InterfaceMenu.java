@@ -1,7 +1,7 @@
 package Vue;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.*;
 
 public class InterfaceMenu extends InterfaceGraphique {
     
@@ -17,7 +17,7 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         // tests
         // todo: implémenter le controleur pour souris etc
-        test.addMouseListener(new MouseListener() {
+        test.addMouseListener(new MouseListener(){
 
             @Override
             public void mouseClicked(MouseEvent e) {

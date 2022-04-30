@@ -10,7 +10,7 @@ public class Niveau {
     final static int colonnesParDefaut = 6;
 
     Niveau(int l, int c) {
-        if (l <= 0 || c <= 0) {
+        if (l < 1 || c < 1) {
             throw new IllegalArgumentException("La taille du niveau doit être positive");
         }
         lignes = l;
@@ -68,7 +68,14 @@ public class Niveau {
         fixerColonnes(colonnes - 1);
     }
 
-    boolean aMorceau(int l, int c) {
+    /**
+     * Vérifie si une case contient un morceau de gaufre
+     * @param l ligne de la case
+     * @param c colonne de la case
+     * @return true si la case (l, c) a un morceau et false si elle est vide
+     * @throws IndexOutOfBoundsException si l ou c est en dehors des dimensions du niveau
+     */
+    public boolean aMorceau(int l, int c) {
         if (l < 0 || c < 0 || l >= lignes || c >= colonnes) {
             throw new IndexOutOfBoundsException("Case (" + l + ", " + c + ") invalide");
         }

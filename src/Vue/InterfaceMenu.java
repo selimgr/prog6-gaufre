@@ -21,6 +21,31 @@ public class InterfaceMenu extends InterfaceGraphique {
         JButton load = createButton("Load game");
         JButton exit = createButton("Exit");
 
+        // Ligne Joueur1
+        JPanel pannelJ1 = new JPanel(new GridLayout(1,6));
+        JLabel J1 = new JLabel("Player 1");
+        JTextField T1 = new JTextField("Name of Player 1", 10);
+        J1.setLabelFor(T1);
+
+        ButtonGroup GroupJ1 = new ButtonGroup();
+        JRadioButton b1 = new JRadioButton("Human", false);
+        JRadioButton b2 = new JRadioButton("Easy AI", true);
+        JRadioButton b3 = new JRadioButton("Medium AI", false);
+        JRadioButton b4 = new JRadioButton("Difficult AI", false);
+        GroupJ1.add(b1);GroupJ1.add(b2);
+        GroupJ1.add(b3);GroupJ1.add(b4);
+
+        pannelJ1.add(J1);
+        pannelJ1.add(T1);
+        pannelJ1.add(b1);
+        pannelJ1.add(b2);
+        pannelJ1.add(b3);
+        pannelJ1.add(b4);
+
+        boxFinal.add(pannelJ1);
+
+        // Ligne Joueur2
+
 
         play.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {

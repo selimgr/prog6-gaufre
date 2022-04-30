@@ -9,7 +9,7 @@ public class Jeu {
      * Crée une nouvelle partie de taille par défaut
      */
     public void nouvellePartie() {
-        nouvellePartie(Niveau.lignesParDefaut, Niveau.colonnesParDefaut);
+        nouvellePartie(Niveau.LIGNES_PAR_DEFAUT, Niveau.COLONNES_PAR_DEFAUT);
     }
 
     /**
@@ -115,7 +115,7 @@ public class Jeu {
     public boolean partieTerminee() {
         return partieTerminee;
     }
-    
+
     void joueurSuivant() {
 
     }

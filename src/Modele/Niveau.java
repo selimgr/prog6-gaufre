@@ -6,8 +6,8 @@ import java.util.List;
 public class Niveau {
     int lignes, colonnes;
     List<Integer> contenu;
-    final static int lignesParDefaut = 8;
-    final static int colonnesParDefaut = 6;
+    final static int LIGNES_PAR_DEFAUT = 8;
+    final static int COLONNES_PAR_DEFAUT = 6;
 
     Niveau(int l, int c) {
         if (l < 1 || c < 1) {

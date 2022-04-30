@@ -21,8 +21,8 @@ public class TestJeu {
     void nouvellePartie(int i) {
         if (i == 0) {
             jeu.nouvellePartie();
-            lignes = Niveau.lignesParDefaut;
-            colonnes = Niveau.colonnesParDefaut;
+            lignes = Niveau.LIGNES_PAR_DEFAUT;
+            colonnes = Niveau.COLONNES_PAR_DEFAUT;
             return;
         }
         if (i < 100) {

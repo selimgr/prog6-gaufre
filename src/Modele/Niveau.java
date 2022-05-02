@@ -8,10 +8,11 @@ public class Niveau {
     List<Integer> contenu;
     final static int LIGNES_PAR_DEFAUT = 8;
     final static int COLONNES_PAR_DEFAUT = 6;
+    final static int TAILLE_MAX = Case.TAILLE_MAX + 1;
 
     Niveau(int l, int c) {
-        if (l < 1 || c < 1) {
-            throw new IllegalArgumentException("La taille du niveau doit être positive");
+        if (l < 1 || c < 1 || l > TAILLE_MAX || c > TAILLE_MAX) {
+            throw new IllegalArgumentException("Impossible de créer le niveau : dimensions incorrectes");
         }
         lignes = l;
         colonnes = c;

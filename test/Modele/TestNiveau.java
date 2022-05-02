@@ -9,8 +9,7 @@ import static org.junit.Assert.*;
 public class TestNiveau {
     Niveau niveau;
     int lignes, colonnes;
-    final int n = 150;
-    final int tailleMax = 1000;
+    final int n = 200;
 
     void nouveauNiveau(int i) {
         if (i < 100) {
@@ -21,8 +20,8 @@ public class TestNiveau {
             colonnes = unite + 1;
         } else {
             Random r = new Random();
-            lignes = r.nextInt(tailleMax) + 1;
-            colonnes = r.nextInt(tailleMax) + 1;
+            lignes = r.nextInt(Niveau.TAILLE_MAX - 1) + 1;
+            colonnes = r.nextInt(Niveau.TAILLE_MAX - 1) + 1;
         }
         niveau = new Niveau(lignes, colonnes);
     }
@@ -50,7 +49,7 @@ public class TestNiveau {
                 IllegalArgumentException.class,
                 () -> new Niveau(l, c)
         );
-        assertTrue(e.getMessage().contains("La taille du niveau doit être positive"));
+        assertTrue(e.getMessage().contains("Impossible de créer le niveau : dimensions incorrectes"));
     }
 
     @Test
@@ -60,6 +59,9 @@ public class TestNiveau {
             exceptionNouveauNiveau(1, -i);
             exceptionNouveauNiveau(-i, -i);
         }
+        exceptionNouveauNiveau(Niveau.TAILLE_MAX + 1, Niveau.TAILLE_MAX);
+        exceptionNouveauNiveau(Niveau.TAILLE_MAX, Niveau.TAILLE_MAX + 1);
+        exceptionNouveauNiveau(Niveau.TAILLE_MAX + 1, Niveau.TAILLE_MAX + 1);
     }
 
     void ajouterLigneEtColonne(int l, int c) {
@@ -189,7 +191,7 @@ public class TestNiveau {
 
     @Test
     public void testExceptionsSupprimer() {
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < Niveau.TAILLE_MAX; i++) {
             niveau = new Niveau(1, i);
             exceptionSupprimerLigne();
             niveau = new Niveau(i, 1);

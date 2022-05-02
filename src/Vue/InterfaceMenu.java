@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class InterfaceMenu extends InterfaceGraphique {
     
     public void demarrer() {
-        this.frame = new JFrame("Gaufre empoisonnée (rip)");
+        this.frame = new JFrame("Menu");
         this.frame.setSize(800, 320);
         this.frame.setLocationRelativeTo(null);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

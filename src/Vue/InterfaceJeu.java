@@ -6,6 +6,9 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 
+//import Modele.Jeu;
+//import Modele.Niveau;
+
 public class InterfaceJeu extends InterfaceGraphique {
 
     
@@ -77,6 +80,8 @@ public class InterfaceJeu extends InterfaceGraphique {
 
 
         this.frame.setVisible(true);
+
+        // Initilisation du Jeu
     }
 
 

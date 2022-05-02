@@ -10,10 +10,10 @@ public class InterfaceMenu extends InterfaceGraphique {
     
     public void demarrer() {
         this.frame = new JFrame("Gaufre empoisonnée (rip)");
-        this.frame.setSize(800, 400);
+        this.frame.setSize(800, 320);
         this.frame.setLocationRelativeTo(null);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.frame.setMinimumSize(new Dimension(700,400));
+        this.frame.setMinimumSize(new Dimension(700,250));
         this.frame.setVisible(true);
         
         Box boxFinal = Box.createVerticalBox();
@@ -24,7 +24,8 @@ public class InterfaceMenu extends InterfaceGraphique {
         // Ligne Joueur1
         JPanel pannelJ1 = new JPanel(new GridLayout(1,6));
         JLabel J1 = new JLabel(" Player 1");
-        JTextField T1 = new JTextField(" Name of Player 1", 150);
+        JTextField T1 = createText(" Name of Player 1");
+        
         J1.setLabelFor(T1);
 
         ButtonGroup GroupJ1 = new ButtonGroup();
@@ -47,7 +48,7 @@ public class InterfaceMenu extends InterfaceGraphique {
         // Ligne Joueur2
         JPanel pannelJ2 = new JPanel(new GridLayout(1,6));
         JLabel J2 = new JLabel(" Player 2 ");
-        JTextField T2 = new JTextField(" Name of Player 2", 150);
+        JTextField T2 = createText(" Name of Player 2");
         J1.setLabelFor(T2);
 
         ButtonGroup GroupJ2 = new ButtonGroup();

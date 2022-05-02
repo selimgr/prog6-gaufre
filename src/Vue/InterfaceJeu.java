@@ -1,7 +1,10 @@
 package Vue;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+
 import java.awt.*;
+import java.awt.event.*;
 
 public class InterfaceJeu extends InterfaceGraphique {
 
@@ -54,6 +57,12 @@ public class InterfaceJeu extends InterfaceGraphique {
         //Idem
         Box b4 = Box.createHorizontalBox();
         b4.add(exit);
+        exit.addMouseListener(new MouseInputAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                // Ferme la fenêtre
+                fermer();
+            }
+        });
         //On crée un conteneur avec gestion verticale
         Box b5 = Box.createVerticalBox();
         b5.add(b1);

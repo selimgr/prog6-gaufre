@@ -2,16 +2,15 @@ package Modele;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Niveau {
     int lignes, colonnes;
     List<Integer> contenu;
-    final static int lignesParDefaut = 8;
-    final static int colonnesParDefaut = 6;
+    final static int LIGNES_PAR_DEFAUT = 8;
+    final static int COLONNES_PAR_DEFAUT = 6;
 
     Niveau(int l, int c) {
-        if (l < 0 || c < 0) {
+        if (l < 1 || c < 1) {
             throw new IllegalArgumentException("La taille du niveau doit être positive");
         }
         lignes = l;
@@ -43,13 +42,13 @@ public class Niveau {
     }
 
     void supprimerLigne() {
-        if (lignes == 0) {
-            throw new NoSuchElementException("Aucune ligne à supprimer");
+        if (lignes == 1) {
+            throw new IllegalStateException("Impossible de supprimer la dernière ligne");
         }
         contenu.remove(contenu.size() - 1);
         lignes--;
     }
-
+    
     private void fixerColonnes(int c) {
         colonnes = c;
 
@@ -63,13 +62,20 @@ public class Niveau {
     }
 
     void supprimerColonne() {
-        if (colonnes == 0) {
-            throw new NoSuchElementException("Aucune colonne à supprimer");
+        if (colonnes == 1) {
+            throw new IllegalStateException("Impossible de supprimer la dernière colonne");
         }
         fixerColonnes(colonnes - 1);
     }
 
-    boolean aMorceau(int l, int c) {
+    /**
+     * Vérifie si une case contient un morceau de gaufre
+     * @param l ligne de la case
+     * @param c colonne de la case
+     * @return true si la case (l, c) a un morceau et false si elle est vide
+     * @throws IndexOutOfBoundsException si l ou c est en dehors des dimensions du niveau
+     */
+    public boolean aMorceau(int l, int c) {
         if (l < 0 || c < 0 || l >= lignes || c >= colonnes) {
             throw new IndexOutOfBoundsException("Case (" + l + ", " + c + ") invalide");
         }
@@ -81,14 +87,22 @@ public class Niveau {
             return false;
         }
 
-        while (lignes > l + 1) {
-            supprimerLigne();
-        }
         if (c == 0) {
-            supprimerLigne();
+            while (contenu.size() > l) {
+                contenu.remove(contenu.size() - 1);
+            }
         } else {
-            contenu.set(l, c);
+            while (l < contenu.size()) {
+                if (c < contenu.get(l)) {
+                    contenu.set(l, c);
+                }
+                l++;
+            }
         }
         return true;
+    }
+
+    boolean estTermine() {
+        return contenu.isEmpty();
     }
 }

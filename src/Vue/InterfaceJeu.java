@@ -9,9 +9,33 @@ import java.awt.event.*;
 //import Modele.Jeu;
 //import Modele.Niveau;
 
+
 public class InterfaceJeu extends InterfaceGraphique {
 
-    
+    String J1;
+    JRadioButton[] b1;
+
+    String J2;
+    JRadioButton[] b2;
+
+    int l;
+    int c;
+
+    public InterfaceJeu(String l, String c, String J1, String J2, JRadioButton[] b1, JRadioButton[] b2){
+        this.J1=J1;
+        this.J2=J2;
+        this.l=Integer.parseInt(l);
+        this.c=Integer.parseInt(c);
+        this.b1=b1;
+        this.b2=b2;
+        runnable = new Runnable() {
+            @Override
+            public void run() { demarrer(); }
+        };
+        //SwingUtilities.invokeLater(runnable);
+    }
+
+
     public void demarrer() {
         this.frame = new JFrame("Gaufre empoisonnée (rip)");
         this.frame.setSize(700, 420);
@@ -22,7 +46,9 @@ public class InterfaceJeu extends InterfaceGraphique {
 
         this.frame.setVisible(true);
 
-
+        // Vérification des noms et taille
+        System.out.println("Taille de la gauffre : (" + l + "," + c + ")");
+        System.out.println("Noms des joueurs : J1=" + J1 + " J2=" + J2);
         
         JLabel joueur = new JLabel("Joueur 1 ou Joueur 2 ", SwingConstants.CENTER);
         joueur.setBackground(Color.GRAY);

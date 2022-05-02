@@ -7,6 +7,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class InterfaceMenu extends InterfaceGraphique {
+
+    private JTextField T1;
+    private JTextField T2;
+
+    private JTextField Ligne;
+    private JTextField Colonne;
+
+    private JRadioButton[] b1;
+	private JRadioButton[] b2;
     
     public void demarrer() {
         this.frame = new JFrame("Menu");
@@ -24,51 +33,52 @@ public class InterfaceMenu extends InterfaceGraphique {
         // Ligne Joueur1
         JPanel pannelJ1 = new JPanel(new GridLayout(1,6));
         JLabel J1 = new JLabel(" Player 1");
-        JTextField T1 = createText(" Name of Player 1");
-        
+        T1 = createText(" Name of Player 1");
         J1.setLabelFor(T1);
 
         ButtonGroup GroupJ1 = new ButtonGroup();
-        JRadioButton b1 = new JRadioButton("Human", false);
-        JRadioButton b2 = new JRadioButton("Easy AI", true);
-        JRadioButton b3 = new JRadioButton("Medium AI", false);
-        JRadioButton b4 = new JRadioButton("Difficult AI", false);
-        GroupJ1.add(b1);GroupJ1.add(b2);
-        GroupJ1.add(b3);GroupJ1.add(b4);
+        b1 = new JRadioButton[4];
+        b1[0] = new JRadioButton("Human", false);
+        b1[1] = new JRadioButton("Easy AI", true);
+        b1[2] = new JRadioButton("Medium AI", false);
+        b1[3] = new JRadioButton("Difficult AI", false);
+        GroupJ1.add(b1[0]);GroupJ1.add(b1[1]);
+        GroupJ1.add(b1[2]);GroupJ1.add(b1[3]);
 
         pannelJ1.add(J1);
         pannelJ1.add(T1);
-        pannelJ1.add(b1);
-        pannelJ1.add(b2);
-        pannelJ1.add(b3);
-        pannelJ1.add(b4);
+        pannelJ1.add(b1[0]);
+        pannelJ1.add(b1[1]);
+        pannelJ1.add(b1[2]);
+        pannelJ1.add(b1[3]);
 
-        pannelJ1.setMaximumSize(new Dimension(100000,100));
+        pannelJ1.setMaximumSize(new Dimension(1500,100));
 
         boxFinal.add(pannelJ1);
 
         // Ligne Joueur2
         JPanel pannelJ2 = new JPanel(new GridLayout(1,6));
         JLabel J2 = new JLabel(" Player 2 ");
-        JTextField T2 = createText(" Name of Player 2");
+        T2 = createText(" Name of Player 2");
         J1.setLabelFor(T2);
 
         ButtonGroup GroupJ2 = new ButtonGroup();
-        JRadioButton b21 = new JRadioButton("Human", false);
-        JRadioButton b22 = new JRadioButton("Easy AI", true);
-        JRadioButton b23 = new JRadioButton("Medium AI", false);
-        JRadioButton b24 = new JRadioButton("Difficult AI", false);
-        GroupJ2.add(b21);GroupJ2.add(b22);
-        GroupJ2.add(b23);GroupJ2.add(b24);
+        b2 = new JRadioButton[4];
+        b2[0] = new JRadioButton("Human", false);
+        b2[1] = new JRadioButton("Easy AI", true);
+        b2[2] = new JRadioButton("Medium AI", false);
+        b2[3] = new JRadioButton("Difficult AI", false);
+        GroupJ2.add(b2[0]);GroupJ2.add(b2[1]);
+        GroupJ2.add(b2[2]);GroupJ2.add(b2[3]);
 
         pannelJ2.add(J2);
         pannelJ2.add(T2);
-        pannelJ2.add(b21);
-        pannelJ2.add(b22);
-        pannelJ2.add(b23);
-        pannelJ2.add(b24);
+        pannelJ2.add(b2[0]);
+        pannelJ2.add(b2[1]);
+        pannelJ2.add(b2[2]);
+        pannelJ2.add(b2[3]);
 
-        pannelJ2.setMaximumSize(new Dimension(100000,100));
+        pannelJ2.setMaximumSize(new Dimension(1500,100));
 
         boxFinal.add(pannelJ2);
 
@@ -83,10 +93,10 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         // Box contenant les deux zones de texte (ligne(s) et colonne(s))
         Box Size = Box.createHorizontalBox();
-        JTextField Ligne = createText(" Line(s)");
+        Ligne = createText(" Line(s)");
         Ligne.setSize(new Dimension(100, 60));
         Ligne.setMaximumSize(new Dimension(100, 60));
-        JTextField Colonne = createText(" Colonne(s)");
+        Colonne = createText(" Colonne(s)");
         Colonne.setSize(new Dimension(100, 60));
         Colonne.setMaximumSize(new Dimension(100, 60));
 
@@ -104,7 +114,7 @@ public class InterfaceMenu extends InterfaceGraphique {
         play.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {
                 // Passe à l'interface Jeu
-                new InterfaceJeu();
+                new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
                 fermer();
             }
         });
@@ -133,12 +143,37 @@ public class InterfaceMenu extends InterfaceGraphique {
         box3.add(exit);
         boxFinal.add(box3);
         
-
         this.frame.add(boxFinal);
-
-
     }
 
+    // Permet de récupérer la taille de la gauffre
+    public String getLigne(){
+        return Ligne.getText();
+    }
+
+    public String getColonne(){
+        return Colonne.getText();
+    }
+
+    // Permet de récupérer le nom des joueurs/IA
+    public String getJ1(){
+        return T1.getText();
+    }
+
+    public String getJ2(){
+        return T2.getText();
+    }
+
+    // Permet de savoir si Humain, IA facile, etc
+    public JRadioButton[] getButtonJ1(){
+        return b1;
+    }
+
+    public JRadioButton[] getButtonJ2(){
+        return b2;
+    }
+
+    // Ferme la fenêtre
     public void fermer() {
         this.frame.setVisible(false);
         this.frame.dispose();

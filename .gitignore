@@ -27,9 +27,6 @@ hs_err_pid*
 .idea/
 *.iml
 
-# jar
-prog6-gaufre.jar
-
 # fichiers pomme
 .DS_Store
 
@@ -38,3 +35,6 @@ bin/*
 
 # out
 out/
+
+# lib
+!lib/*.jar

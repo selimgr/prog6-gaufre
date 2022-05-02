@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class TestNiveau {
     Niveau niveau;
     int lignes, colonnes;
-    final int n = 200;
+    final int n = 150;
     final int tailleMax = 1000;
 
     void nouveauNiveau(int i) {

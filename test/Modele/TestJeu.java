@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class TestJeu {
     Jeu jeu;
     int lignes, colonnes;
-    final int n = 100;
+    final int n = 150;
     final int tailleMax = 1000;
 
     @Before

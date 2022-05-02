@@ -12,17 +12,50 @@ public class TestCase {
     int ligne2, colonne2;
     final int n = 100;
 
-    void nouvelleCase() {
+    void nouvelleCase(int lig, int col) {
+        c = new Case(lig, col);
+        ligne = lig;
+        colonne = col;
+    }
+
+    void nouvelleCaseAleatoire() {
         Random r = new Random();
         ligne = r.nextInt(Case.TAILLE_MAX + 1);
         colonne = r.nextInt(Case.TAILLE_MAX + 1);
         c = new Case(ligne, colonne);
     }
 
+    void deuxNouvellesCases(int lig1, int col1, int lig2, int col2) {
+        nouvelleCase(lig2, col2);
+        ligne2 = ligne;
+        colonne2 = colonne;
+        c2 = c;
+        nouvelleCase(lig1, col1);
+    }
+
+    void deuxNouvellesCasesAleatoires() {
+        nouvelleCaseAleatoire();
+        ligne2 = ligne;
+        colonne2 = colonne;
+        c2 = c;
+        nouvelleCaseAleatoire();
+    }
+
     @Test
     public void testNouvelleCase() {
+        for (int i = 0; i <= Case.TAILLE_MAX; i++) {
+            for (int j = 0; j <= Case.TAILLE_MAX; j++) {
+                c = new Case(i, j);
+                assertEquals(i, c.ligne());
+                assertEquals(j, c.colonne());
+            }
+        }
+    }
+
+    @Test
+    public void testNouvelleCaseAleatoire() {
         for (int i = 0; i < n; i++) {
-            nouvelleCase();
+            nouvelleCaseAleatoire();
             assertEquals(ligne, c.ligne());
             assertEquals(colonne, c.colonne());
         }
@@ -52,6 +85,16 @@ public class TestCase {
     }
 
     @Test
+    public void testDescriptionArithmetiqueSimple() {
+        c = new Case(3, 5);
+        assertEquals(864, c.descriptionArithmetique());
+        c = new Case(7, 12);
+        assertEquals(8_957_952, c.descriptionArithmetique());
+        c = new Case(2, 9);
+        assertEquals(4_608, c.descriptionArithmetique());
+    }
+
+    @Test
     public void testDescriptionArithmetique() {
         long valeur1ereColonne = 1;
 
@@ -67,18 +110,25 @@ public class TestCase {
         }
     }
 
-    void deuxNouvellesCases() {
-        nouvelleCase();
-        ligne2 = ligne;
-        colonne2 = colonne;
-        c2 = c;
-        nouvelleCase();
+    @Test
+    public void testEstMultipleSimple() {
+        deuxNouvellesCases(3, 5, 7, 12);
+        assertFalse(c.estMultiple(c2));
+        assertTrue(c2.estMultiple(c));
+
+        deuxNouvellesCases(3, 5, 2, 9);
+        assertFalse(c.estMultiple(c2));
+        assertFalse(c2.estMultiple(c));
+
+        deuxNouvellesCases(2, 9, 2, 9);
+        assertTrue(c.estMultiple(c2));
+        assertTrue(c2.estMultiple(c));
     }
 
     @Test
-    public void testEstMultiple() {
+    public void testEstMultipleAleatoire() {
         for (int i = 0; i < n; i++) {
-            deuxNouvellesCases();
+            deuxNouvellesCasesAleatoires();
 
             if (ligne >= ligne2 && colonne >= colonne2) {
                 assertTrue(c.estMultiple(c2));
@@ -89,9 +139,24 @@ public class TestCase {
     }
 
     @Test
-    public void testEstDiviseur() {
+    public void testEstDiviseurSimple() {
+        deuxNouvellesCases(3, 5, 7, 12);
+        assertTrue(c.estDiviseur(c2));
+        assertFalse(c2.estDiviseur(c));
+
+        deuxNouvellesCases(3, 5, 2, 9);
+        assertFalse(c.estDiviseur(c2));
+        assertFalse(c2.estDiviseur(c));
+
+        deuxNouvellesCases(2, 9, 2, 9);
+        assertTrue(c.estDiviseur(c2));
+        assertTrue(c2.estDiviseur(c));
+    }
+
+    @Test
+    public void testEstDiviseurAleatoire() {
         for (int i = 0; i < n; i++) {
-            deuxNouvellesCases();
+            deuxNouvellesCasesAleatoires();
 
             if (ligne <= ligne2 && colonne <= colonne2) {
                 assertTrue(c.estDiviseur(c2));
@@ -102,16 +167,36 @@ public class TestCase {
     }
 
     @Test
-    public void testComparaison() {
-        for (int i = 0; i < n; i++) {
-            deuxNouvellesCases();
+    public void testComparaisonSimple() {
+        deuxNouvellesCases(3, 5, 7, 12);
+        assertEquals(-1, c.compareTo(c2));
+        assertEquals(1, c2.compareTo(c));
+
+        deuxNouvellesCases(3, 5, 2, 9);
+        assertEquals(1, c.compareTo(c2));
+        assertEquals(1, c2.compareTo(c));
+
+        deuxNouvellesCases(2, 9, 2, 9);
+        assertEquals(0, c.compareTo(c2));
+        assertEquals(0, c2.compareTo(c));
+    }
+
+    @Test
+    public void testComparaisonAleatoire() {
+        int branches = 0;
+
+        for (int i = 0; i < n || branches != 7; i++) {
+            deuxNouvellesCasesAleatoires();
 
             if (ligne == ligne2 && colonne == colonne2) {
                 assertEquals(0, c.compareTo(c2));
+                branches |= 1;
             } else if (ligne <= ligne2 && colonne <= colonne2) {
                 assertEquals(-1, c.compareTo(c2));
+                branches |= 2;
             } else {
                 assertEquals(1, c.compareTo(c2));
+                branches |= 4;
             }
         }
     }
@@ -119,7 +204,7 @@ public class TestCase {
     @Test
     public void testExceptionArgumentNull() {
         for (int i = 0; i < n; i++) {
-            nouvelleCase();
+            nouvelleCaseAleatoire();
 
             @SuppressWarnings("ResultOfMethodCallIgnored")
             IllegalArgumentException e = assertThrows(
@@ -140,5 +225,11 @@ public class TestCase {
             );
             assertTrue(e.getMessage().contains("Impossible de comparer avec null"));
         }
+    }
+
+    @Test
+    public void testToString() {
+        nouvelleCaseAleatoire();
+        assertEquals("(" + ligne + ", " + colonne + ")", c.toString());
     }
 }

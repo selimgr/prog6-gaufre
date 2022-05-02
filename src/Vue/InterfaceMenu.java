@@ -114,13 +114,21 @@ public class InterfaceMenu extends InterfaceGraphique {
         play.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {
                 // Passe à l'interface Jeu
-                new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
-                fermer();
+                if(Integer.parseInt(getLigne())>30 || Integer.parseInt(getColonne())>50){
+                    fermer();
+                    // Ajouter une fenêtre d'erreur.
+                    new InterfaceMenu();
+                }
+                else{
+                    new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
+                    fermer();
+                }
             }
         });
         Box box1 = Box.createHorizontalBox();
         box1.add(play);
         boxFinal.add(box1);
+        boxFinal.add(Box.createRigidArea(new Dimension(1,20)));
         
 
         load.addMouseListener(new MouseInputAdapter() {
@@ -131,6 +139,7 @@ public class InterfaceMenu extends InterfaceGraphique {
         Box box2 = Box.createHorizontalBox();
         box2.add(load);
         boxFinal.add(box2);
+        boxFinal.add(Box.createRigidArea(new Dimension(1,20)));
         
 
         exit.addMouseListener(new MouseInputAdapter() {

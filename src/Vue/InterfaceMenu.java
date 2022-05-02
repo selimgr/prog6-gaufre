@@ -83,7 +83,7 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         load.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {
-                // TODO
+                // msg secret pour tom; ta geul
             }
         });
         Box box2 = Box.createHorizontalBox();

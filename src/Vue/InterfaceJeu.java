@@ -32,7 +32,6 @@ public class InterfaceJeu extends InterfaceGraphique {
             @Override
             public void run() { demarrer(); }
         };
-        //SwingUtilities.invokeLater(runnable);
     }
 
 

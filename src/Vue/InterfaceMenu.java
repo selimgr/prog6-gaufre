@@ -10,10 +10,10 @@ public class InterfaceMenu extends InterfaceGraphique {
     
     public void demarrer() {
         this.frame = new JFrame("Gaufre empoisonnée (rip)");
-        this.frame.setSize(400, 400);
+        this.frame.setSize(800, 400);
         this.frame.setLocationRelativeTo(null);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.frame.setMinimumSize(new Dimension(400,400));
+        this.frame.setMinimumSize(new Dimension(700,400));
         this.frame.setVisible(true);
         
         Box boxFinal = Box.createVerticalBox();
@@ -23,8 +23,8 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         // Ligne Joueur1
         JPanel pannelJ1 = new JPanel(new GridLayout(1,6));
-        JLabel J1 = new JLabel("Player 1");
-        JTextField T1 = new JTextField("Name of Player 1", 10);
+        JLabel J1 = new JLabel(" Player 1");
+        JTextField T1 = new JTextField(" Name of Player 1", 150);
         J1.setLabelFor(T1);
 
         ButtonGroup GroupJ1 = new ButtonGroup();
@@ -45,6 +45,27 @@ public class InterfaceMenu extends InterfaceGraphique {
         boxFinal.add(pannelJ1);
 
         // Ligne Joueur2
+        JPanel pannelJ2 = new JPanel(new GridLayout(1,6));
+        JLabel J2 = new JLabel(" Player 2 ");
+        JTextField T2 = new JTextField(" Name of Player 2", 150);
+        J1.setLabelFor(T2);
+
+        ButtonGroup GroupJ2 = new ButtonGroup();
+        JRadioButton b21 = new JRadioButton("Human", false);
+        JRadioButton b22 = new JRadioButton("Easy AI", true);
+        JRadioButton b23 = new JRadioButton("Medium AI", false);
+        JRadioButton b24 = new JRadioButton("Difficult AI", false);
+        GroupJ2.add(b21);GroupJ2.add(b22);
+        GroupJ2.add(b23);GroupJ2.add(b24);
+
+        pannelJ2.add(J2);
+        pannelJ2.add(T2);
+        pannelJ2.add(b21);
+        pannelJ2.add(b22);
+        pannelJ2.add(b23);
+        pannelJ2.add(b24);
+
+        boxFinal.add(pannelJ2);
 
 
         play.addMouseListener(new MouseInputAdapter() {
@@ -78,8 +99,6 @@ public class InterfaceMenu extends InterfaceGraphique {
         Box box3 = Box.createHorizontalBox();
         box3.add(exit);
         boxFinal.add(box3);
-        
-        
         
 
         this.frame.add(boxFinal);

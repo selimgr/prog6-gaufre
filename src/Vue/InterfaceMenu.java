@@ -6,6 +6,8 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 
+import Modele.*;
+
 public class InterfaceMenu extends InterfaceGraphique {
 
     private JTextField T1;
@@ -17,7 +19,8 @@ public class InterfaceMenu extends InterfaceGraphique {
     private JRadioButton[] b1;
 	private JRadioButton[] b2;
     
-    public void demarrer() {
+    @Override
+    public void demarrer(Jeu J) {
         this.frame = new JFrame("Menu");
         this.frame.setSize(800, 280);
         this.frame.setLocationRelativeTo(null);
@@ -87,8 +90,8 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         // Texte
         Box name = Box.createHorizontalBox();
-        JLabel J = new JLabel("Waffle size");
-        name.add(J);
+        JLabel JSize = new JLabel("Waffle size");
+        name.add(JSize);
         SizePanel.add(name);
 
         // Box contenant les deux zones de texte (ligne(s) et colonne(s))
@@ -120,7 +123,10 @@ public class InterfaceMenu extends InterfaceGraphique {
                 }
                 else{
                     // Passe à l'interface Jeu
-                    new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
+                    int l=Integer.parseInt(getLigne());
+                    int c=Integer.parseInt(getColonne());
+                    J.nouvellePartie(l,c);
+                    new InterfaceJeu(J, getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
                     fermer();
                 }
             }

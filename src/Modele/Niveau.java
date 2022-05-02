@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Niveau {
-    int lignes, colonnes;
+    public int lignes;
+    public int colonnes;
     List<Integer> contenu;
     final static int LIGNES_PAR_DEFAUT = 8;
     final static int COLONNES_PAR_DEFAUT = 6;
 
-    Niveau(int l, int c) {
+    public Niveau(int l, int c) {
         if (l < 1 || c < 1) {
             throw new IllegalArgumentException("La taille du niveau doit être positive");
         }

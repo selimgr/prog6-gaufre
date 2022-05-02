@@ -7,14 +7,21 @@ import java.awt.event.*;
 
 import java.awt.*;
 
+import Modele.*;
+
 abstract class InterfaceGraphique {
     JFrame frame;
     Runnable runnable;
+    Jeu J;
+    Niveau N;
 
     public InterfaceGraphique() {
         runnable = new Runnable() {
             @Override
-            public void run() { demarrer(); }
+            public void run() { 
+                J= new Jeu();
+                demarrer(J); 
+            }
         };
         SwingUtilities.invokeLater(runnable);
     }
@@ -44,6 +51,6 @@ abstract class InterfaceGraphique {
         return T1;
     }
 
-    public abstract void demarrer();
+    public abstract void demarrer(Jeu J);
     public abstract void fermer();
 }

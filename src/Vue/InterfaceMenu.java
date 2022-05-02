@@ -113,13 +113,13 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         play.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {
-                // Passe à l'interface Jeu
                 if(Integer.parseInt(getLigne())>30 || Integer.parseInt(getColonne())>50){
                     fermer();
                     // Ajouter une fenêtre d'erreur.
                     new InterfaceMenu();
                 }
                 else{
+                    // Passe à l'interface Jeu
                     new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
                     fermer();
                 }

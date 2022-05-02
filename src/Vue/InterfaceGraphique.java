@@ -28,8 +28,7 @@ abstract class InterfaceGraphique {
     }
 
     public JTextField createText(String s){
-        JTextField T1 = new JTextField(s, 150);
-        // A mettre dans une fonction
+        JTextField T1 = new JTextField(s, 50);
         T1.getFont().deriveFont(Font.ITALIC);
         T1.setForeground(Color.gray);
         T1.addMouseListener(new MouseInputAdapter() {

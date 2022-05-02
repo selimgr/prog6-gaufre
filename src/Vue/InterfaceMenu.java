@@ -10,10 +10,10 @@ public class InterfaceMenu extends InterfaceGraphique {
     
     public void demarrer() {
         this.frame = new JFrame("Menu");
-        this.frame.setSize(800, 320);
+        this.frame.setSize(800, 280);
         this.frame.setLocationRelativeTo(null);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.frame.setMinimumSize(new Dimension(700,250));
+        this.frame.setMinimumSize(new Dimension(790,275));
         this.frame.setVisible(true);
         
         Box boxFinal = Box.createVerticalBox();
@@ -43,6 +43,8 @@ public class InterfaceMenu extends InterfaceGraphique {
         pannelJ1.add(b3);
         pannelJ1.add(b4);
 
+        pannelJ1.setMaximumSize(new Dimension(100000,100));
+
         boxFinal.add(pannelJ1);
 
         // Ligne Joueur2
@@ -66,7 +68,37 @@ public class InterfaceMenu extends InterfaceGraphique {
         pannelJ2.add(b23);
         pannelJ2.add(b24);
 
+        pannelJ2.setMaximumSize(new Dimension(100000,100));
+
         boxFinal.add(pannelJ2);
+
+        // Ligne pour la taille de la gauffre
+        Box SizePanel = Box.createVerticalBox();
+
+        // Texte
+        Box name = Box.createHorizontalBox();
+        JLabel J = new JLabel("Waffle size");
+        name.add(J);
+        SizePanel.add(name);
+
+        // Box contenant les deux zones de texte (ligne(s) et colonne(s))
+        Box Size = Box.createHorizontalBox();
+        JTextField Ligne = createText(" Line(s)");
+        Ligne.setSize(new Dimension(100, 60));
+        Ligne.setMaximumSize(new Dimension(100, 60));
+        JTextField Colonne = createText(" Colonne(s)");
+        Colonne.setSize(new Dimension(100, 60));
+        Colonne.setMaximumSize(new Dimension(100, 60));
+
+        Size.add(Box.createRigidArea(new Dimension(310, 0)));
+        Size.add(Ligne);
+        Size.add(Box.createRigidArea(new Dimension(10, 0)));
+        Size.add(Colonne);
+        Size.add(Box.createRigidArea(new Dimension(310, 0)));
+
+        SizePanel.add(Size);
+
+        boxFinal.add(SizePanel);
 
 
         play.addMouseListener(new MouseInputAdapter() {

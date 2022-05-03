@@ -6,7 +6,7 @@ import java.util.List;
 public class Niveau {
     public int lignes;
     public int colonnes;
-    List<Integer> contenu;
+    public List<Integer> contenu;
     final static int LIGNES_PAR_DEFAUT = 8;
     final static int COLONNES_PAR_DEFAUT = 6;
 

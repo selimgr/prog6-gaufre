@@ -23,6 +23,13 @@ public class Niveau {
         }
     }
 
+    public Niveau (Niveau n){
+        this.lignes = n.lignes();
+        this.colonnes = n.colonnes();
+        this.contenu = n.getContenu();
+    }
+
+
     /**
      * @return Le nombre de lignes du niveau
      */
@@ -83,7 +90,7 @@ public class Niveau {
         return l < contenu.size() && c < contenu.get(l);
     }
 
-    boolean coup(int l, int c) {
+    public boolean coup(int l, int c) {
         if (!aMorceau(l, c)) {
             return false;
         }
@@ -105,5 +112,18 @@ public class Niveau {
 
     boolean estTermine() {
         return contenu.isEmpty();
+    }
+
+    public List<Integer> getContenu() {
+        return contenu;
+    }
+    @Override
+    public String toString() {
+        String s = "";
+        int t = contenu.size();
+        for (int k=0; k<t;k++) {
+            s += contenu.get(k) + " ";
+        }
+        return s;
     }
 }

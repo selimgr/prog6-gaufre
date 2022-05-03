@@ -94,6 +94,7 @@ public class IA {
 
     public Niveau IA_joue(Niveau n,boolean premier){
         if (memo.isEmpty()){
+            // On pourra rajouter les heuristiques vu dans le documents IA içi
             Calcul_joueur_1(n,!premier);
         }
         Pair<Integer,Integer> Coup = configGagnants.get(n.toString());

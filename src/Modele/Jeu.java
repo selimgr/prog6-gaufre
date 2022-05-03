@@ -108,7 +108,7 @@ public class Jeu {
         }
         partieCommencee = true;
 
-        if (!n.coup(l, c)) {
+        if (!n.jouerCoup(l, c)) {
             return false;
         }
         q.jouerCoup(l, c);
@@ -117,10 +117,6 @@ public class Jeu {
             partieTerminee = true;
         }
         return true;
-    }
-
-    public boolean annulerCoup() {
-        return q.annulerCoup();
     }
 
     /**

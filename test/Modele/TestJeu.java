@@ -11,11 +11,48 @@ public class TestJeu {
     Jeu jeu;
     int lignes, colonnes;
     final int n = 150;
-    final int tailleMax = 1000;
 
     @Before
     public void nouveauJeu() {
         jeu = new Jeu();
+    }
+
+    void nouveauxJoueurs() {
+        jeu.nouveauJoueur("a", TypeJoueur.HUMAIN);
+        jeu.nouveauJoueur("b", TypeJoueur.IA_FACILE);
+    }
+
+    @Test
+    public void testNouveauxJoueurs() {
+        nouveauxJoueurs();
+
+        if (jeu.nomJoueurActuel().equals("a")) {
+            assertEquals("a", jeu.nomJoueurActuel());
+            assertEquals("b", jeu.nomJoueurSuivant());
+            assertEquals(TypeJoueur.HUMAIN, jeu.typeJoueurActuel());
+            assertEquals(TypeJoueur.IA_FACILE, jeu.typeJoueurSuivant());
+        } else {
+            assertEquals("b", jeu.nomJoueurActuel());
+            assertEquals("a", jeu.nomJoueurSuivant());
+            assertEquals(TypeJoueur.IA_FACILE, jeu.typeJoueurActuel());
+            assertEquals(TypeJoueur.HUMAIN, jeu.typeJoueurSuivant());
+        }
+        jeu.nouvellePartie();
+        assertEquals(0, jeu.nombreCoupsJoueurActuel());
+        assertEquals(0, jeu.nombreCoupsJoueurSuivant());
+        assertEquals(0, jeu.nombreVictoiresJoueurActuel());
+        assertEquals(0, jeu.nombreVictoiresJoueurSuivant());
+    }
+
+    @Test
+    public void testExceptionNombreMaxJoueurs() {
+        nouveauxJoueurs();
+
+        IllegalStateException e = assertThrows(
+                IllegalStateException.class,
+                () -> jeu.nouveauJoueur("c", TypeJoueur.IA_MOYEN)
+        );
+        assertTrue(e.getMessage().contains("Impossible d'ajouter un nouveau joueur"));
     }
 
     void nouvellePartie(int i) {
@@ -33,8 +70,8 @@ public class TestJeu {
             colonnes = unite + 1;
         } else {
             Random r = new Random();
-            lignes = r.nextInt(tailleMax) + 1;
-            colonnes = r.nextInt(tailleMax) + 1;
+            lignes = r.nextInt(Niveau.TAILLE_MAX - 1) + 1;
+            colonnes = r.nextInt(Niveau.TAILLE_MAX - 1) + 1;
         }
         jeu.nouvellePartie(lignes, colonnes);
     }
@@ -49,6 +86,8 @@ public class TestJeu {
 
     @Test
     public void testNouvellePartie() {
+        nouveauxJoueurs();
+
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
             assertEquals(lignes, jeu.niveau().lignes());
@@ -57,21 +96,43 @@ public class TestJeu {
         }
     }
 
-    void exceptionNouvellePartie(int l, int c) {
+    void exceptionNouvellePartieDimensions(int l, int c) {
         IllegalArgumentException e = assertThrows(
                 IllegalArgumentException.class,
                 () -> jeu.nouvellePartie(l, c)
         );
-        assertTrue(e.getMessage().contains("La taille du niveau doit être positive"));
+        assertTrue(e.getMessage().contains("Impossible de créer le niveau : dimensions incorrectes"));
     }
 
     @Test
-    public void testExceptionNouvellePartie() {
+    public void testExceptionNouvellePartieDimensions() {
+        nouveauxJoueurs();
+
         for (int i = 0; i < n; i++) {
-            exceptionNouvellePartie(-i, 1);
-            exceptionNouvellePartie(1, -i);
-            exceptionNouvellePartie(-i, -i);
+            exceptionNouvellePartieDimensions(-i, 1);
+            exceptionNouvellePartieDimensions(1, -i);
+            exceptionNouvellePartieDimensions(-i, -i);
         }
+        exceptionNouvellePartieDimensions(Niveau.TAILLE_MAX + 1, Niveau.TAILLE_MAX);
+        exceptionNouvellePartieDimensions(Niveau.TAILLE_MAX, Niveau.TAILLE_MAX + 1);
+        exceptionNouvellePartieDimensions(Niveau.TAILLE_MAX + 1, Niveau.TAILLE_MAX + 1);
+    }
+
+    @Test
+    public void testExceptionNouvellePartieJoueursManquants() {
+        IllegalStateException e = assertThrows(
+                IllegalStateException.class,
+                () -> jeu.nouvellePartie(0, 0)
+        );
+        assertTrue(e.getMessage().contains("Impossible de créer une nouvelle partie : joueurs manquants"));
+
+        jeu.nouveauJoueur("a", TypeJoueur.HUMAIN);
+
+        e = assertThrows(
+                IllegalStateException.class,
+                () -> jeu.nouvellePartie(0, 0)
+        );
+        assertTrue(e.getMessage().contains("Impossible de créer une nouvelle partie : joueurs manquants"));
     }
 
     void ajouterLigneEtColonne(int l, int c) {
@@ -91,6 +152,7 @@ public class TestJeu {
     @Test
     public void testAjouterSupprimer() {
         Random r = new Random();
+        nouveauxJoueurs();
 
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
@@ -122,7 +184,7 @@ public class TestJeu {
 
             int l = r.nextInt(lignes);
             int c = r.nextInt(colonnes);
-            jeu.coup(l, c);
+            jeu.jouerCoup(l, c);
 
             ajouterLigneEtColonne(lignes, colonnes);
             supprimerLigneEtColonne(lignes, colonnes);
@@ -132,6 +194,7 @@ public class TestJeu {
     @Test
     public void testModificationsTaille() {
         int i, j;
+        nouveauxJoueurs();
 
         for (i = 0; i < n; i++) {
             nouvellePartie(i);
@@ -196,6 +259,8 @@ public class TestJeu {
 
     @Test
     public void testExceptionsAjouterSupprimer() {
+        nouveauxJoueurs();
+
         IllegalStateException e = assertThrows(
                 IllegalStateException.class,
                 () -> jeu.ajouterLigne()
@@ -224,14 +289,31 @@ public class TestJeu {
     @Test
     public void testCoup() {
         Random r = new Random();
+        nouveauxJoueurs();
+        int victoiresJ1 = 0, victoiresJ2 = 0;
 
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
 
             int l = r.nextInt(lignes);
             int c = r.nextInt(colonnes);
+            assertTrue(jeu.jouerCoup(l, c));
 
-            assertTrue(jeu.coup(l, c));
+            if (l == 0 && c == 0) {
+                assertTrue(jeu.partieTerminee());
+                victoiresJ2++;
+                assertEquals(1, jeu.nombreCoupsJoueurActuel());
+                assertEquals(0, jeu.nombreCoupsJoueurSuivant());
+            } else {
+                assertFalse(jeu.partieTerminee());
+                assertEquals(0, jeu.nombreCoupsJoueurActuel());
+                assertEquals(1, jeu.nombreCoupsJoueurSuivant());
+                int tmp = victoiresJ1;
+                victoiresJ1 = victoiresJ2;
+                victoiresJ2 = tmp;
+            }
+            assertEquals(victoiresJ1, jeu.nombreVictoiresJoueurActuel());
+            assertEquals(victoiresJ2, jeu.nombreVictoiresJoueurSuivant());
 
             for (int j = 0; j < lignes; j++) {
                 for (int k = 0; k < colonnes; k++) {
@@ -275,7 +357,7 @@ public class TestJeu {
             if (!jeu.niveau().aMorceau(l, c)) {
                 continue;
             }
-            assertTrue(jeu.coup(l, c));
+            assertTrue(jeu.jouerCoup(l, c));
 
             if (c < tab[l]) {
                 tab[l] = c;
@@ -286,6 +368,8 @@ public class TestJeu {
 
     @Test
     public void testSequenceCoup() {
+        nouveauxJoueurs();
+
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
             sequenceCoup();
@@ -295,14 +379,15 @@ public class TestJeu {
     @Test
     public void testExceptionCoupAucunePartie() {
         Random r = new Random();
+        nouveauxJoueurs();
 
         for (int i = 0; i < n; i++) {
-            int l = r.nextInt(tailleMax);
-            int c = r.nextInt(tailleMax);
+            int l = r.nextInt(Niveau.TAILLE_MAX);
+            int c = r.nextInt(Niveau.TAILLE_MAX);
 
             IllegalStateException e = assertThrows(
                     IllegalStateException.class,
-                    () -> jeu.coup(l, c)
+                    () -> jeu.jouerCoup(l, c)
             );
             assertTrue(e.getMessage().contains("Aucun niveau auquel jouer"));
         }
@@ -311,13 +396,15 @@ public class TestJeu {
     void exceptionCoupCaseInvalide(int l, int c) {
         IndexOutOfBoundsException e = assertThrows(
                 IndexOutOfBoundsException.class,
-                () -> jeu.coup(l, c)
+                () -> jeu.jouerCoup(l, c)
         );
         assertTrue(e.getMessage().contains("Case (" + l + ", " + c + ") invalide"));
     }
 
     @Test
     public void testExceptionCoupCaseInvalide() {
+        nouveauxJoueurs();
+
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
             exceptionCoupCaseInvalide(-1, 0);
@@ -330,17 +417,18 @@ public class TestJeu {
     @Test
     public void testCoupInvalide() {
         Random r = new Random();
+        nouveauxJoueurs();
 
         for (int i = 0; i < n; i++) {
             nouvellePartie(i);
 
             int l = r.nextInt(lignes);
             int c = r.nextInt(colonnes);
-            assertTrue(jeu.coup(l, c));
+            assertTrue(jeu.jouerCoup(l, c));
 
             l += r.nextInt(lignes - l);
             c += r.nextInt(colonnes - c);
-            assertFalse(jeu.coup(l, c));
+            assertFalse(jeu.jouerCoup(l, c));
         }
     }
 
@@ -348,6 +436,8 @@ public class TestJeu {
     public void testPartieTerminee() {
         int l, c;
         Random r = new Random();
+        nouveauxJoueurs();
+
         assertFalse(jeu.partieTerminee());
 
         for (int i = 0; i < n; i++) {
@@ -357,15 +447,10 @@ public class TestJeu {
                 assertFalse(jeu.partieTerminee());
                 l = r.nextInt(lignes);
                 c = r.nextInt(colonnes);
-                jeu.coup(l, c);
+                jeu.jouerCoup(l, c);
             } while (l != 0 || c != 0);
 
             assertTrue(jeu.partieTerminee());
         }
-    }
-
-    @Test
-    public void testJoueurSuivant() {
-
     }
 }

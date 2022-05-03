@@ -1,6 +1,8 @@
 package Modele;
 
-public class Jeu {
+import Patterns.Observable;
+
+public class Jeu extends Observable {
     Niveau n;
     Etat q;
     boolean partieCommencee;
@@ -52,6 +54,7 @@ public class Jeu {
         }
         if (!partieCommencee) {
             n.ajouterLigne();
+            metAJour();
         }
     }
 
@@ -65,6 +68,8 @@ public class Jeu {
         }
         if (!partieCommencee && n.lignes() > 1) {
             n.supprimerLigne();
+            metAJour();
+
         }
     }
 
@@ -78,6 +83,8 @@ public class Jeu {
         }
         if (!partieCommencee) {
             n.ajouterColonne();
+            metAJour();
+
         }
     }
 
@@ -91,6 +98,8 @@ public class Jeu {
         }
         if (!partieCommencee && n.colonnes() > 1) {
             n.supprimerColonne();
+            metAJour();
+
         }
     }
 
@@ -112,6 +121,7 @@ public class Jeu {
             return false;
         }
         q.jouerCoup(l, c);
+        metAJour();
 
         if (n.estTermine()) {
             partieTerminee = true;

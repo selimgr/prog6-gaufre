@@ -3,7 +3,6 @@ package Modele;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -78,36 +77,55 @@ public class TestEtat {
         q.nouvellePartie();
         Random r = new Random();
         int l, c;
+        Joueur j1 = q.joueurActuel();
+        Joueur j2 = q.joueurSuivant();
+        int coupsJ1 = 0, coupsJ2 = 0;
         int victoiresJ1 = 0, victoiresJ2 = 0;
 
-        assertEquals(0, q.joueurActuel().nombreCoups());
-        assertEquals(0, q.joueurSuivant().nombreCoups());
-        assertEquals(0, q.joueurActuel().nombreVictoires());
-        assertEquals(0, q.joueurSuivant().nombreVictoires());
+        assertEquals(0, j1.nombreCoups());
+        assertEquals(0, j2.nombreCoups());
+        assertEquals(0, j1.nombreVictoires());
+        assertEquals(0, j2.nombreVictoires());
 
         for (int i = 0; i < n; i++) {
             l = r.nextInt(Niveau.TAILLE_MAX);
             c = r.nextInt(Niveau.TAILLE_MAX);
             q.jouerCoup(l, c);
-            assertEquals(i, q.joueurActuel().nombreCoups());
-            assertEquals(i+1, q.joueurSuivant().nombreCoups());
+            coupsJ1++;
+            assertEquals(coupsJ1, j1.nombreCoups());
+            assertEquals(coupsJ2, j2.nombreCoups());
+
             if (l == 0 && c == 0) {
                 victoiresJ2++;
+                q.nouvellePartie();
+                coupsJ1 = 0;
+                coupsJ2 = 0;
+                continue;
             }
 
             l = r.nextInt(Niveau.TAILLE_MAX);
             c = r.nextInt(Niveau.TAILLE_MAX);
             q.jouerCoup(l, c);
-            assertEquals(i+1, q.joueurActuel().nombreCoups());
-            assertEquals(i+1, q.joueurSuivant().nombreCoups());
+            coupsJ2++;
+            assertEquals(coupsJ1, j1.nombreCoups());
+            assertEquals(coupsJ2, j2.nombreCoups());
+
             if (l == 0 && c == 0) {
                 victoiresJ1++;
+                q.nouvellePartie();
+                j1 = q.joueurActuel();
+                j2 = q.joueurSuivant();
+                coupsJ1 = 0;
+                coupsJ2 = 0;
+                int tmp = victoiresJ1;
+                victoiresJ1 = victoiresJ2;
+                victoiresJ2 = tmp;
             }
         }
-        assertEquals(n, q.joueurActuel().nombreCoups());
-        assertEquals(n, q.joueurSuivant().nombreCoups());
-        assertEquals(victoiresJ1, q.joueurActuel().nombreVictoires());
-        assertEquals(victoiresJ2, q.joueurSuivant().nombreVictoires());
+        assertEquals(coupsJ1, j1.nombreCoups());
+        assertEquals(coupsJ2, j2.nombreCoups());
+        assertEquals(victoiresJ1, j1.nombreVictoires());
+        assertEquals(victoiresJ2, j2.nombreVictoires());
     }
 
     @Test
@@ -141,11 +159,16 @@ public class TestEtat {
             l = r.nextInt(Niveau.TAILLE_MAX);
             c = r.nextInt(Niveau.TAILLE_MAX);
             q.jouerCoup(l, c);
-            assertEquals(0, q.joueurActuel().nombreCoups());
-            assertEquals(1, q.joueurSuivant().nombreCoups());
-            assertTrue(q.annulerCoup());
-            assertEquals(0, q.joueurActuel().nombreCoups());
-            assertEquals(0, q.joueurSuivant().nombreCoups());
+
+            if (l == 0 && c == 0) {
+                q.nouvellePartie();
+            } else {
+                assertEquals(0, q.joueurActuel().nombreCoups());
+                assertEquals(1, q.joueurSuivant().nombreCoups());
+                assertTrue(q.annulerCoup());
+                assertEquals(0, q.joueurActuel().nombreCoups());
+                assertEquals(0, q.joueurSuivant().nombreCoups());
+            }
         }
     }
 

@@ -23,6 +23,11 @@ public class Niveau {
         }
     }
 
+    public Niveau (Niveau n){
+        this.lignes = n.lignes();
+        this.colonnes = n.colonnes();
+        this.contenu = n.getContenu();
+    }
     /**
      * @return Le nombre de lignes du niveau
      */

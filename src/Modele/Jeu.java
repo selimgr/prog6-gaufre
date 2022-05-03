@@ -20,6 +20,7 @@ public class Jeu {
      * @param c nombre de colonnes
      * @throws IllegalArgumentException si l < 1 ou c < 1
      */
+  
     public void nouvellePartie(int l, int c, Joueur J1, Joueur J2) {
         n = new Niveau(l, c);
         partieCommencee = false;

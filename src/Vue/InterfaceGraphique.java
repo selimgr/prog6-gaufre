@@ -1,12 +1,8 @@
 package Vue;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-
 import java.awt.event.*;
-
 import java.awt.*;
-
 import Modele.*;
 
 abstract class InterfaceGraphique implements Runnable {
@@ -23,8 +19,7 @@ abstract class InterfaceGraphique implements Runnable {
 
     JFrame frame;
 
-
-    public JButton createButton(String s){
+    public JButton createButton(String s) {
         JButton button = new JButton(s);
 		button.setAlignmentX(Component.TOP_ALIGNMENT);
 		button.setPreferredSize(new Dimension(120, 50));
@@ -32,20 +27,26 @@ abstract class InterfaceGraphique implements Runnable {
         return button;
     }
 
-    public JTextField createText(String s){
+    public JTextField createText(String s) {
         JTextField T1 = new JTextField(s, 50);
         T1.getFont().deriveFont(Font.ITALIC);
         T1.setForeground(Color.gray);
-        T1.addMouseListener(new MouseInputAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                // Si le player clique, alors le texte s'efface
-                JTextField texte = ((JTextField)e.getSource());
-                texte.setText("");
-                texte.getFont().deriveFont(Font.PLAIN);
-                texte.setForeground(Color.black);
-                texte.removeMouseListener(this);
+        T1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (T1.getText().equals(s)) {
+                    T1.setText("");
+                    T1.setForeground(Color.BLACK);
+                }
             }
-        });
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (T1.getText().isEmpty()) {
+                    T1.setForeground(Color.GRAY);
+                    T1.setText(s);
+                }
+            }
+            });
         return T1;
     }
 

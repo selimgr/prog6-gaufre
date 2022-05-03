@@ -4,12 +4,14 @@ public class Jeu {
     public Niveau n;
     boolean partieCommencee;
     boolean partieTerminee;
+    int joueurActuel = 0;
+    Joueur[] joueurs;
 
     /**
      * Crée une nouvelle partie de taille par défaut
      */
     public void nouvellePartie() {
-        nouvellePartie(Niveau.LIGNES_PAR_DEFAUT, Niveau.COLONNES_PAR_DEFAUT);
+        nouvellePartie(Niveau.LIGNES_PAR_DEFAUT, Niveau.COLONNES_PAR_DEFAUT, new Joueur("Player 1", false), new Joueur("Player 2", false));
     }
 
     /**
@@ -18,10 +20,13 @@ public class Jeu {
      * @param c nombre de colonnes
      * @throws IllegalArgumentException si l < 1 ou c < 1
      */
-    public void nouvellePartie(int l, int c) {
+    public void nouvellePartie(int l, int c, Joueur J1, Joueur J2) {
         n = new Niveau(l, c);
         partieCommencee = false;
         partieTerminee = false;
+        joueurs = new Joueur[2];
+        joueurs[0] = J1;
+        joueurs[1] = J2;
     }
 
     /**
@@ -116,7 +121,26 @@ public class Jeu {
         return partieTerminee;
     }
 
-    void joueurSuivant() {
+    /**
+     * Retourne le joueur d'index i
+     * @return Joueur
+     */
+    public Joueur getPlayer(int i) {
+        return joueurs[i % 2];
+    }
 
+    /**
+     * Retourne le joueur qui joue
+     * @return 0 ou 1 
+     */
+    public int getPlayer() {
+        return joueurActuel;
+    }
+
+    /**
+     * Effectue le changement de joueur
+     */
+    void joueurSuivant() {
+        joueurActuel = (joueurActuel + 1) % 2;
     }
 }

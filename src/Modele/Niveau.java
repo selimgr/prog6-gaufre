@@ -89,7 +89,7 @@ public class Niveau {
         return l < contenu.size() && c < contenu.get(l);
     }
 
-    public boolean coup(int l, int c) {
+    public boolean jouerCoup(int l, int c) {
         if (!aMorceau(l, c)) {
             return false;
         }

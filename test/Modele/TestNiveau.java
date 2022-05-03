@@ -228,7 +228,7 @@ public class TestNiveau {
             int l = r.nextInt(lignes);
             int c = r.nextInt(colonnes);
 
-            assertTrue(niveau.coup(l, c));
+            assertTrue(niveau.jouerCoup(l, c));
 
             for (int j = 0; j < lignes; j++) {
                 for (int k = 0; k < colonnes; k++) {
@@ -247,7 +247,7 @@ public class TestNiveau {
         for (int i = 0; i < n; i++) {
             nouveauNiveau(i);
             assertFalse(niveau.estTermine());
-            assertTrue(niveau.coup(0, 0));
+            assertTrue(niveau.jouerCoup(0, 0));
             assertTrue(niveau.estTermine());
         }
     }
@@ -261,11 +261,11 @@ public class TestNiveau {
 
             int l = r.nextInt(lignes);
             int c = r.nextInt(colonnes);
-            assertTrue(niveau.coup(l, c));
+            assertTrue(niveau.jouerCoup(l, c));
 
             l += r.nextInt(lignes - l);
             c += r.nextInt(colonnes - c);
-            assertFalse(niveau.coup(l, c));
+            assertFalse(niveau.jouerCoup(l, c));
         }
     }
 
@@ -299,7 +299,7 @@ public class TestNiveau {
             if (!niveau.aMorceau(l, c)) {
                 continue;
             }
-            assertTrue(niveau.coup(l, c));
+            assertTrue(niveau.jouerCoup(l, c));
 
             if (c < tab[l]) {
                 tab[l] = c;

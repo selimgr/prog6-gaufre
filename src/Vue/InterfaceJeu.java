@@ -1,92 +1,115 @@
 package Vue;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-
-import java.awt.*;
+import javax.swing.event.*;
 import java.awt.event.*;
-
-//import Modele.Jeu;
-//import Modele.Niveau;
+import java.awt.*;
+import Modele.*;
 
 public class InterfaceJeu extends InterfaceGraphique {
 
+    Jeu J;
+
+    private JButton Exit;
+    private JButton Next;
+    private JButton Previous;
+    private JButton Save;
+    private JPanel controlsPanel;
+    public JLabel currentPlayer;
+    private JPanel gaufrePanel;
+    private JPanel jPanel1;
+    private JPanel jPanel2;
+    private JPanel jPanel3;
+    private JButton restartBtn;
+
+    public InterfaceJeu(Jeu J){
+        this.J=J;
+    }
     
-    public void demarrer() {
-        this.frame = new JFrame("Gaufre empoisonnée (rip)");
-        this.frame.setSize(700, 420);
-        this.frame.setLocationRelativeTo(null);
+    public static void demarrer(Jeu J){
+        SwingUtilities.invokeLater(new InterfaceJeu(J));
+    }
+
+    @Override
+    public void run() {
+        frame = new JFrame("Gaufre empoisonnée (rip)");
+        frame.setSize(700, 420);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //Taille minimum de la fenêtre (pour le redimensionnement)
-        this.frame.setMinimumSize(new Dimension(700,420));
+        // Taille minimum de la fenêtre (pour le redimensionnement)
+        frame.setMinimumSize(new Dimension(700,420));
 
-        this.frame.setVisible(true);
+        frame.setVisible(true);
 
-
+        // Vérification des noms et taille
+        System.out.println("Taille de la gauffre : (" + J.n.lignes() + "," + J.n.colonnes() + ")");
         
-        JLabel joueur = new JLabel("Joueur 1 ou Joueur 2 ", SwingConstants.CENTER);
-        joueur.setBackground(Color.GRAY);
-        joueur.setForeground(Color.BLACK);
-        joueur.setOpaque(true);
-        this.frame.add(joueur, BorderLayout.NORTH);
+        jPanel3 = new JPanel();
+        gaufrePanel = new JPanel();
+        controlsPanel = new JPanel();
+        restartBtn = new JButton();
+        jPanel1 = new JPanel();
+        Previous = new JButton();
+        Next = new JButton();
+        Save = new JButton();
+        Exit = new JButton();
+        jPanel2 = new JPanel();
+        currentPlayer = new JLabel();
 
-        //this.frame.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg")), SwingConstants.CENTER), BorderLayout.WEST);
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
+        gaufrePanel.setLayout(new java.awt.BorderLayout());
+        // Initilisation du Jeu
+        VueGaufre VG = new VueGaufre(J, this);
+        VG.addMouseListener(new GaufreListener());
+        this.gaufrePanel.add(VG);
 
-        // Création des boutons
-        JButton start = createButton("Restart");
-        JButton previous = createButton("Previous");
-        JButton next = createButton("   Next    ");
-        JButton save = createButton("Save");
-        JButton exit = createButton("Exit");
+        jPanel3.add(gaufrePanel, java.awt.BorderLayout.CENTER);
 
-        // Panel où il y a les boutons
-        JPanel panelButton = new JPanel();
-		panelButton.setBackground(Color.GRAY);
-        panelButton.setMinimumSize(new Dimension(200,400));
-        panelButton.setMaximumSize(new Dimension(400,1000));
-		this.frame.add(panelButton, BorderLayout.EAST);
+        controlsPanel.setPreferredSize(new java.awt.Dimension(200, 316));
+        controlsPanel.setLayout(new java.awt.GridLayout(4, 1, 0, 20));
 
-        //On crée un conteneur avec gestion horizontale
-        Box b1 = Box.createHorizontalBox();
-        b1.add(start);
-        //Idem
-        Box b2 = Box.createHorizontalBox();
-        b2.add(previous);
-        b2.add(next);
-        //Idem
-        Box b3 = Box.createHorizontalBox();
-        b3.add(save);
-        //Idem
-        Box b4 = Box.createHorizontalBox();
-        b4.add(exit);
-        exit.addMouseListener(new MouseInputAdapter() {
+        restartBtn.setText("Restart");
+        controlsPanel.add(restartBtn);
+
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        Previous.setText("<");
+        jPanel1.add(Previous);
+
+        Next.setText(">");
+        jPanel1.add(Next);
+
+        controlsPanel.add(jPanel1);
+
+        Save.setText("Save");
+        controlsPanel.add(Save);
+
+        Exit.setText("Exit");
+        // TODO: Utiliser Clicklistener ?
+        Exit.addMouseListener(new MouseInputAdapter() {
             public void mouseClicked(MouseEvent e) {
                 // Ferme la fenêtre
                 fermer();
             }
         });
-        //On crée un conteneur avec gestion verticale
-        Box b5 = Box.createVerticalBox();
-        b5.add(b1);
-        b5.add(Box.createRigidArea(new Dimension(0,82)));
-        b5.add(b2);
-        b5.add(Box.createRigidArea(new Dimension(0,82)));
-        b5.add(b3);
-        b5.add(Box.createRigidArea(new Dimension(0,82)));
-        b5.add(b4);
+        controlsPanel.add(Exit);
 
-        panelButton.add(b5);
+        jPanel3.add(controlsPanel, java.awt.BorderLayout.EAST);
 
+        this.frame.getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setPreferredSize(new java.awt.Dimension(690, 30));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+        currentPlayer.setText("Le joueur " + (J.getPlayer(J.getPlayer()).getPlayerName()) + (J.getPlayer(J.getPlayer()).isAI() == true ? " (AI)" : "")  + " est entrain de jouer");
+        jPanel2.add(currentPlayer, java.awt.BorderLayout.CENTER);
+
+        this.frame.getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
         this.frame.setVisible(true);
-
-        // Initilisation du Jeu
-    }
-
-
-    public void fermer() {
-        this.frame.setVisible(false);
-        this.frame.dispose();
+        
     }
 }

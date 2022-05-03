@@ -9,22 +9,20 @@ import java.awt.*;
 
 import Modele.*;
 
-abstract class InterfaceGraphique {
-    JFrame frame;
-    Runnable runnable;
+abstract class InterfaceGraphique implements Runnable {
     Jeu J;
-    Niveau N;
 
-    public InterfaceGraphique() {
-        runnable = new Runnable() {
-            @Override
-            public void run() { 
-                J= new Jeu();
-                demarrer(J); 
-            }
-        };
-        SwingUtilities.invokeLater(runnable);
-    }
+    JButton play;
+    JButton load;
+
+    JButton restart;
+    JButton previous;
+    JButton next;
+    JButton save;
+    JButton exit;
+
+    JFrame frame;
+
 
     public JButton createButton(String s){
         JButton button = new JButton(s);
@@ -51,6 +49,9 @@ abstract class InterfaceGraphique {
         return T1;
     }
 
-    public abstract void demarrer(Jeu J);
-    public abstract void fermer();
+    // Ferme la fenêtre
+    public void fermer() {
+        this.frame.setVisible(false);
+        this.frame.dispose();
+    }
 }

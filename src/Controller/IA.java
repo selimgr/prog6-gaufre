@@ -1,9 +1,7 @@
 package Controller;
-import Modele.Arbre;
 import Modele.Niveau;
 import Modele.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
 import java.util.List;
 import java.util.ListIterator;
@@ -47,7 +45,7 @@ public class IA {
             int it = c.get(i);
             for (int k = 0; k < it; k++){
                 Niveau niv = new Niveau(n);
-                niv.coup(i,k);
+                niv.jouerCoup(i,k);
                 valeur = valeur || Calcul_joueur_2(niv,!humain);
                 if (valeur){
                     Pair<Integer,Integer> coupG = new Pair<>(i,k);
@@ -80,7 +78,7 @@ public class IA {
             int it = c.get(i);
             for (int k = 0; k < it; k++){
                 Niveau niv = new Niveau(n);
-                niv.coup(i,k);
+                niv.jouerCoup(i,k);
                 valeur = valeur && Calcul_joueur_1(niv,!humain);
                 if (valeur){
                     Pair<Integer,Integer> coupG = new Pair<>(i,k);
@@ -97,7 +95,7 @@ public class IA {
             Calcul_joueur_1(n,!premier);
         }
         Pair<Integer,Integer> Coup = configGagnants.get(n.toString());
-        n.coup(Coup.getV1(),Coup.getV2());
+        n.jouerCoup(Coup.getV1(),Coup.getV2());
         return n;
     }
 }

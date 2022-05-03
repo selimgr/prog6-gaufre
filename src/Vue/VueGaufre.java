@@ -21,7 +21,7 @@ public class VueGaufre extends JComponent {
             x=1;
             y=(i*10)+1;
             for(int j=0; j<N.colonnes(); j++){
-                g.drawRect(x, y, w, h);
+                //g.drawRect(x, y, w, h);
                 x+=10;
             }
         }

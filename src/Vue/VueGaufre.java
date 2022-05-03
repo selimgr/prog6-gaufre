@@ -12,7 +12,7 @@ public class VueGaufre extends JComponent {
         N = J.niveau();
     }
 
-    /* 
+
     @Override
     public void paintComponent(Graphics g) {
         int x, y;
@@ -20,14 +20,16 @@ public class VueGaufre extends JComponent {
 
         for(int i=0; i<N.lignes(); i++){
             x=1;
-            y=(i*10)+1;
+            y=(i*w)+1;
             for(int j=0; j<N.colonnes(); j++){
                 g.drawRect(x, y, w, h);
-                x+=10;
+                x+=w;
             }
         }
     }
-    */
+
+    //Faire une fonction pour modifier affichage de la gaufre
+
 
 
 }

@@ -98,4 +98,6 @@ public class InterfaceJeu extends InterfaceGraphique {
         VueGaufre VG = new VueGaufre(J);
         frame.getContentPane().add(VG);
     }
+
+    //Faire une fonction qui recupère des coordonnées et modifie en conséquence niveau et VueGaufre apr rapport à niveau.
 }

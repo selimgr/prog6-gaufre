@@ -32,6 +32,9 @@ public class ClickListener implements ActionListener{
         }else if(e.getSource() == Graphique.load){
             // TODO
         }// TODO : Buttons Jeu
+        else {
+            //Demander à interface de jouer coup après avoir récupérer les coordonnées de la souris.
+        }
     }
     
 }

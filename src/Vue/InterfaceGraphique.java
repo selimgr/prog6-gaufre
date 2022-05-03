@@ -1,12 +1,8 @@
 package Vue;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-
 import java.awt.event.*;
-
 import java.awt.*;
-
 import Modele.*;
 
 abstract class InterfaceGraphique implements Runnable {

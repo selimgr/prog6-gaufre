@@ -6,75 +6,62 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 
-//import Modele.Jeu;
-//import Modele.Niveau;
+import Modele.*;
 
 
 public class InterfaceJeu extends InterfaceGraphique {
 
-    String J1;
-    JRadioButton[] b1;
+    Jeu J;
 
-    String J2;
-    JRadioButton[] b2;
-
-    int l;
-    int c;
-
-    public InterfaceJeu(String l, String c, String J1, String J2, JRadioButton[] b1, JRadioButton[] b2){
-        this.J1=J1;
-        this.J2=J2;
-        this.l=Integer.parseInt(l);
-        this.c=Integer.parseInt(c);
-        this.b1=b1;
-        this.b2=b2;
-        runnable = new Runnable() {
-            @Override
-            public void run() { demarrer(); }
-        };
+    public InterfaceJeu(Jeu J){
+        this.J=J;
+    }
+    
+    public static void demarrer(Jeu J){
+        SwingUtilities.invokeLater(new InterfaceJeu(J));
     }
 
-
-    public void demarrer() {
-        this.frame = new JFrame("Gaufre empoisonnée (rip)");
-        this.frame.setSize(700, 420);
-        this.frame.setLocationRelativeTo(null);
+        @Override
+        public void run() {
+        frame = new JFrame("Gaufre empoisonnée (rip)");
+        frame.setSize(700, 420);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //Taille minimum de la fenêtre (pour le redimensionnement)
-        this.frame.setMinimumSize(new Dimension(700,420));
+        // Taille minimum de la fenêtre (pour le redimensionnement)
+        frame.setMinimumSize(new Dimension(700,420));
 
-        this.frame.setVisible(true);
+        frame.setVisible(true);
 
         // Vérification des noms et taille
-        System.out.println("Taille de la gauffre : (" + l + "," + c + ")");
-        System.out.println("Noms des joueurs : J1=" + J1 + " J2=" + J2);
+        System.out.println("Taille de la gauffre : (" + J.n.lignes() + "," + J.n.colonnes() + ")");
+        //System.out.println("Noms des joueurs : J1=" + J1 + " J2=" + J2);
         
-        JLabel joueur = new JLabel("Joueur 1 ou Joueur 2 ", SwingConstants.CENTER);
+        JLabel joueur = new JLabel("Current player", SwingConstants.CENTER);
         joueur.setBackground(Color.GRAY);
         joueur.setForeground(Color.BLACK);
         joueur.setOpaque(true);
-        this.frame.add(joueur, BorderLayout.NORTH);
+        frame.add(joueur, BorderLayout.NORTH);
 
         //this.frame.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("gaufre.jpg")), SwingConstants.CENTER), BorderLayout.WEST);
 
 
         // Création des boutons
-        JButton start = createButton("Restart");
-        JButton previous = createButton("Previous");
-        JButton next = createButton("   Next    ");
-        JButton save = createButton("Save");
-        JButton exit = createButton("Exit");
+        restart = createButton("Restart");
+        previous = createButton("Previous");
+        next = createButton("   Next    ");
+        save = createButton("Save");
+        exit = createButton("Exit");
 
         // Panel où il y a les boutons
         JPanel panelButton = new JPanel();
 		panelButton.setBackground(Color.GRAY);
         panelButton.setMinimumSize(new Dimension(200,400));
         panelButton.setMaximumSize(new Dimension(400,1000));
-		this.frame.add(panelButton, BorderLayout.EAST);
+		frame.add(panelButton, BorderLayout.EAST);
 
         //On crée un conteneur avec gestion horizontale
         Box b1 = Box.createHorizontalBox();
-        b1.add(start);
+        b1.add(restart);
         //Idem
         Box b2 = Box.createHorizontalBox();
         b2.add(previous);
@@ -104,14 +91,11 @@ public class InterfaceJeu extends InterfaceGraphique {
         panelButton.add(b5);
 
 
-        this.frame.setVisible(true);
+        frame.setVisible(true);
+
 
         // Initilisation du Jeu
-    }
-
-
-    public void fermer() {
-        this.frame.setVisible(false);
-        this.frame.dispose();
+        VueGaufre VG = new VueGaufre(J);
+        frame.getContentPane().add(VG);
     }
 }

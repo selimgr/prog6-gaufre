@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Niveau {
-    int lignes, colonnes;
-    private List<Integer> contenu;
+    public int lignes;
+    public int colonnes;
+    List<Integer> contenu;
     final static int LIGNES_PAR_DEFAUT = 8;
     final static int COLONNES_PAR_DEFAUT = 6;
 
-    Niveau(int l, int c) {
+    public Niveau(int l, int c) {
         if (l < 1 || c < 1) {
             throw new IllegalArgumentException("La taille du niveau doit être positive");
         }
@@ -20,12 +21,6 @@ public class Niveau {
         for (int i = 0; i < lignes; i++) {
             contenu.add(colonnes);
         }
-    }
-
-    public Niveau (Niveau n){
-        this.lignes = n.lignes();
-        this.colonnes = n.colonnes();
-        this.contenu = n.getContenu();
     }
 
     /**
@@ -88,7 +83,7 @@ public class Niveau {
         return l < contenu.size() && c < contenu.get(l);
     }
 
-    public boolean coup(int l, int c) {
+    boolean coup(int l, int c) {
         if (!aMorceau(l, c)) {
             return false;
         }
@@ -111,18 +106,4 @@ public class Niveau {
     boolean estTermine() {
         return contenu.isEmpty();
     }
-
-    public List<Integer> getContenu() {
-        return contenu;
-    }
-    @Override
-    public String toString() {
-        String s = "";
-        int t = contenu.size();
-        for (int k=0; k<t;k++) {
-            s += contenu.get(k) + " ";
-        }
-        return s;
-    }
 }
-

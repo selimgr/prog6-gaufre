@@ -7,17 +7,22 @@ import java.awt.event.*;
 
 import java.awt.*;
 
-abstract class InterfaceGraphique {
-    JFrame frame;
-    Runnable runnable;
+import Modele.*;
 
-    public InterfaceGraphique() {
-        runnable = new Runnable() {
-            @Override
-            public void run() { demarrer(); }
-        };
-        SwingUtilities.invokeLater(runnable);
-    }
+abstract class InterfaceGraphique implements Runnable {
+    Jeu J;
+
+    JButton play;
+    JButton load;
+
+    JButton restart;
+    JButton previous;
+    JButton next;
+    JButton save;
+    JButton exit;
+
+    JFrame frame;
+
 
     public JButton createButton(String s){
         JButton button = new JButton(s);
@@ -44,6 +49,9 @@ abstract class InterfaceGraphique {
         return T1;
     }
 
-    public abstract void demarrer();
-    public abstract void fermer();
+    // Ferme la fenêtre
+    public void fermer() {
+        this.frame.setVisible(false);
+        this.frame.dispose();
+    }
 }

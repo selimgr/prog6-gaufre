@@ -1,7 +1,7 @@
 package Modele;
 
 public class Jeu {
-    Niveau n;
+    public Niveau n;
     boolean partieCommencee;
     boolean partieTerminee;
 

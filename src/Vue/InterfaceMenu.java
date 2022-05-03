@@ -6,29 +6,51 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 
+import Modele.*;
+
 public class InterfaceMenu extends InterfaceGraphique {
 
     private JTextField T1;
     private JTextField T2;
 
-    private JTextField Ligne;
-    private JTextField Colonne;
+    JTextField Ligne;
+    JTextField Colonne;
 
     private JRadioButton[] b1;
 	private JRadioButton[] b2;
+
+    Jeu J;
+
+
+    private InterfaceMenu(Jeu jeu) {
+        this.J = jeu;
+    }
+
+    public static void demarrer(Jeu J){
+        SwingUtilities.invokeLater(new InterfaceMenu(J));
+    }
     
-    public void demarrer() {
-        this.frame = new JFrame("Menu");
-        this.frame.setSize(800, 280);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.frame.setMinimumSize(new Dimension(790,275));
-        this.frame.setVisible(true);
+    @Override
+    public void run() {
+        frame = new JFrame("Menu");
+        frame.setSize(800, 280);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(790,275));
+        frame.setVisible(true);
         
         Box boxFinal = Box.createVerticalBox();
-        JButton play = createButton("Play");
-        JButton load = createButton("Load game");
-        JButton exit = createButton("Exit");
+        play = createButton("Play");
+        load = createButton("Load game");
+        exit = createButton("Exit");
+        //JButton [] AllButtons = {play, load, exit};
+
+        ClickListener click = new ClickListener(this);
+
+        play.addActionListener(click);
+        load.addActionListener(click);
+        exit.addActionListener(click);
+
 
         // Ligne Joueur1
         JPanel pannelJ1 = new JPanel(new GridLayout(1,6));
@@ -87,8 +109,8 @@ public class InterfaceMenu extends InterfaceGraphique {
 
         // Texte
         Box name = Box.createHorizontalBox();
-        JLabel J = new JLabel("Waffle size");
-        name.add(J);
+        JLabel JSize = new JLabel("Waffle size (max 30 lines and 50 columns)");
+        name.add(JSize);
         SizePanel.add(name);
 
         // Box contenant les deux zones de texte (ligne(s) et colonne(s))
@@ -111,43 +133,16 @@ public class InterfaceMenu extends InterfaceGraphique {
         boxFinal.add(SizePanel);
 
 
-        play.addMouseListener(new MouseInputAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                // Passe à l'interface Jeu
-                if(Integer.parseInt(getLigne())>30 || Integer.parseInt(getColonne())>50){
-                    fermer();
-                    // Ajouter une fenêtre d'erreur.
-                    new InterfaceMenu();
-                }
-                else{
-                    new InterfaceJeu(getLigne(), getColonne(), getJ1(), getJ2(), getButtonJ1(), getButtonJ2());
-                    fermer();
-                }
-            }
-        });
         Box box1 = Box.createHorizontalBox();
         box1.add(play);
         boxFinal.add(box1);
         boxFinal.add(Box.createRigidArea(new Dimension(1,20)));
         
-
-        load.addMouseListener(new MouseInputAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                // TODO
-            }
-        });
         Box box2 = Box.createHorizontalBox();
         box2.add(load);
         boxFinal.add(box2);
         boxFinal.add(Box.createRigidArea(new Dimension(1,20)));
         
-
-        exit.addMouseListener(new MouseInputAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                // Ferme la fenêtre
-                fermer();
-            }
-        });
         Box box3 = Box.createHorizontalBox();
         box3.add(exit);
         boxFinal.add(box3);
@@ -180,11 +175,5 @@ public class InterfaceMenu extends InterfaceGraphique {
 
     public JRadioButton[] getButtonJ2(){
         return b2;
-    }
-
-    // Ferme la fenêtre
-    public void fermer() {
-        this.frame.setVisible(false);
-        this.frame.dispose();
     }
 }

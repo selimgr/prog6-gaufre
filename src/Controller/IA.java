@@ -5,16 +5,18 @@ import Modele.Pair;
 import java.util.HashMap; // import the HashMap class
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 
 public class IA {
     private HashMap<String, Integer> memo;
     private HashMap<String, Pair<Integer,Integer>> configGagnants;
+    private int difficulte;
     //Arbre a;
-    public IA(Niveau n) {
+    public IA(int dif) {
         //a = new Arbre<Niveau>(n);
         memo = new HashMap<>();
         configGagnants = new HashMap<>();
-
+        difficulte = dif;
     }
 
     /**
@@ -90,13 +92,18 @@ public class IA {
         return valeur;
     }
 
-    public Niveau IA_joue(Niveau n,boolean premier){
-        if (memo.isEmpty()){
+    public Pair<Integer,Integer> joue(Niveau n,boolean premier){
+        if (memo.size() == 0){
             // On pourra rajouter les heuristiques vu dans le documents IA içi
-            Calcul_joueur_1(n,!premier);
+            //Calcul_joueur_1(n,!premier);
         }
-        Pair<Integer,Integer> Coup = configGagnants.get(n.toString());
-        n.coup(Coup.getV1(),Coup.getV2());
-        return n;
+        Random r = new Random();
+        int x = r.nextInt(n.lignes());
+        System.out.println("x = "+x);
+        int y = r.nextInt(n.getContenu().get(x));
+        return new Pair<Integer, Integer>(x,y);
+        //return configGagnants.get(n.toString());
+        //n.coup(Coup.getV1(),Coup.getV2());
+        //return n;
     }
 }

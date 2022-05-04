@@ -11,8 +11,9 @@ public class GaufreListener extends MouseListener {
         int y = ( e.getX() / t.largeurCase);
         int x = ( e.getY() / t.hauteurCase);
 
-        // System.out.println(x + "," + y);
-        if (t.G.coup(x, y)) {
+        System.out.println(x + "," + y);
+
+        if (t.Controller.jouerUnCoup(x,y)) {
             if (t.G.partieTerminee()) {
                 t.IJ.currentPlayer.setText("Partie terminée! Gagnant: " + (t.G.getPlayer(t.G.getPlayer()+1).getPlayerName()));
             } else {

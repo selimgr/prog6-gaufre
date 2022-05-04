@@ -1,11 +1,15 @@
 package Modele;
 
+import Controller.IA;
+
 public class Jeu {
     public Niveau n;
     boolean partieCommencee;
     boolean partieTerminee;
     int joueurActuel = 0;
     Joueur[] joueurs;
+    IA ia1;
+    IA ia2;
 
     /**
      * Crée une nouvelle partie de taille par défaut
@@ -28,6 +32,9 @@ public class Jeu {
         joueurs = new Joueur[2];
         joueurs[0] = J1;
         joueurs[1] = J2;
+        ia1 = new IA(0);
+        ia2 = new IA(0);
+
     }
 
     /**
@@ -143,5 +150,17 @@ public class Jeu {
      */
     void joueurSuivant() {
         joueurActuel = (joueurActuel + 1) % 2;
+    }
+
+    public boolean estPremier() {
+        return joueurActuel == 0;
+    }
+
+    public IA getIa1(){
+        return ia1;
+    }
+
+    public IA getIa2(){
+        return ia2;
     }
 }

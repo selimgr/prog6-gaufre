@@ -3,6 +3,7 @@ package Vue;
 import javax.swing.*;
 import java.awt.*;
 
+import Controller.Jouer;
 import Modele.*;
 
 public class VueGaufre extends JComponent {
@@ -10,11 +11,13 @@ public class VueGaufre extends JComponent {
     Jeu G;
     InterfaceJeu IJ;
     public int largeurCase, hauteurCase;
+    Jouer Controller;
     
     public VueGaufre(Jeu J, InterfaceJeu JI){
         N = J.niveau();
         G = J;
         IJ = JI;
+        Controller = new Jouer(J, this);
     }
 
     @Override

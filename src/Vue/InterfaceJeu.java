@@ -112,6 +112,4 @@ public class InterfaceJeu extends InterfaceGraphique {
         this.frame.setVisible(true);
         
     }
-
-    //Faire une fonction qui recupère des coordonnées et modifie en conséquence niveau et VueGaufre apr rapport à niveau.
 }

@@ -1,9 +1,7 @@
 package Controller;
-import Modele.Arbre;
 import Modele.Niveau;
 import Modele.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap; // import the HashMap class
 import java.util.List;
 import java.util.ListIterator;
@@ -41,7 +39,7 @@ public class IA {
             return configGagnants.get(n.toString()) != null;
         }
         memo.put(n.toString(),0);
-        ListIterator li = c.listIterator();
+        ListIterator<Integer> li = c.listIterator();
         int i = 0;
         while (li.hasNext()) {
             int it = c.get(i);
@@ -74,7 +72,7 @@ public class IA {
             return configGagnants.get(n.toString()) != null;
         }
         memo.put(n.toString(),1);
-        ListIterator li = c.listIterator();
+        ListIterator<Integer> li = c.listIterator();
         int i = 0;
         while (li.hasNext()) {
             int it = c.get(i);

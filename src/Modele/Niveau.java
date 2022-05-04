@@ -115,15 +115,6 @@ public class Niveau {
     }
 
     public List<Integer> getContenu() {
-        return contenu;
-    }
-    @Override
-    public String toString() {
-        String s = "";
-        int t = contenu.size();
-        for (int k=0; k<t;k++) {
-            s += contenu.get(k) + " ";
-        }
-        return s;
+        return this.contenu;
     }
 }

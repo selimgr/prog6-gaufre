@@ -57,13 +57,13 @@ public class InterfaceMenu extends InterfaceGraphique {
         GroupJ1 = new ButtonGroup();
         b1 = new JRadioButton[4];
         b1[0] = new JRadioButton("Human", false);
-        b1[0].setActionCommand("Human");
+        b1[0].setActionCommand("-1");
         b1[1] = new JRadioButton("Easy AI", true);
-        b1[1].setActionCommand("Easy AI");
+        b1[1].setActionCommand("0");
         b1[2] = new JRadioButton("Medium AI", false);
-        b1[2].setActionCommand("Medium AI");
+        b1[2].setActionCommand("1");
         b1[3] = new JRadioButton("Difficult AI", false);
-        b1[3].setActionCommand("Difficult AI");
+        b1[3].setActionCommand("2");
         GroupJ1.add(b1[0]);GroupJ1.add(b1[1]);
         GroupJ1.add(b1[2]);GroupJ1.add(b1[3]);
 
@@ -87,13 +87,13 @@ public class InterfaceMenu extends InterfaceGraphique {
         GroupJ2 = new ButtonGroup();
         b2 = new JRadioButton[4];
         b2[0] = new JRadioButton("Human", false);
-        b2[0].setActionCommand("Human");
+        b2[0].setActionCommand("-1");
         b2[1] = new JRadioButton("Easy AI", true);
-        b2[1].setActionCommand("Easy AI");
+        b2[1].setActionCommand("0");
         b2[2] = new JRadioButton("Medium AI", false);
-        b2[2].setActionCommand("Medium AI");
+        b2[2].setActionCommand("1");
         b2[3] = new JRadioButton("Difficult AI", false);
-        b2[3].setActionCommand("Difficult AI");
+        b2[3].setActionCommand("2");
         GroupJ2.add(b2[0]);GroupJ2.add(b2[1]);
         GroupJ2.add(b2[2]);GroupJ2.add(b2[3]);
 
@@ -170,29 +170,25 @@ public class InterfaceMenu extends InterfaceGraphique {
         return new Joueur(T1.getText(), this.AI(1), this.getDifficult(1));
     }
 
-    public Joueur getJ2(){
+    public Joueur getJ2() {
         if (T2.getText().compareTo("Name of Player 2") == 0) return null;
         return new Joueur(T2.getText(), this.AI(2), this.getDifficult(2));
     }
 
-    public boolean AI(int joueur){
-        if(joueur==1){
-            return (!b1[0].isSelected());
-        }else if(joueur==2){
-            return (!b2[0].isSelected());
+    public boolean AI(int joueur) {
+        if (joueur == 1) {
+            return !b1[0].isSelected();
+        } else if (joueur == 2) {
+            return !b2[0].isSelected();
         }
         return false;
     }
 
-    public int getDifficult(int joueur){
-        if(joueur==1){
-            if(b1[1].isSelected()){return 0;}
-            if(b1[2].isSelected()){return 1;}
-            if(b1[3].isSelected()){return 2;}
-        }else if(joueur==2){
-            if(b2[1].isSelected()){return 0;}
-            if(b2[2].isSelected()){return 1;}
-            if(b2[3].isSelected()){return 2;}
+    public int getDifficult(int joueur) {
+        if (joueur == 1) {
+            return Integer.parseInt(this.GroupJ1.getSelection().getActionCommand());
+        } else if (joueur == 2) {
+            return Integer.parseInt(this.GroupJ2.getSelection().getActionCommand());
         }
         return -1;
     }

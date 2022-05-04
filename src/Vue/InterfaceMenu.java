@@ -165,13 +165,41 @@ public class InterfaceMenu extends InterfaceGraphique {
     }
 
     // Permet de récupérer le Joueur/IA
-    public Joueur getJ1() {
-        if (T1.getText().compareTo("Name of Player 1") == 0) return null;
-        return new Joueur(T1.getText(), GroupJ1.getSelection().getActionCommand() == "Human" ? false : true);
+    public boolean getJ1() {
+        if (T1.getText().compareTo("Name of Player 1") == 0) return false;
+        switch (GroupJ1.getSelection().getActionCommand()) {
+            case "Human":
+                J.nouveauJoueur(T1.getText(), TypeJoueur.HUMAIN);
+                break;
+            case "Easy AI":
+                J.nouveauJoueur(T1.getText(), TypeJoueur.IA_FACILE);
+                break;
+            case "Medium AI":
+                J.nouveauJoueur(T1.getText(), TypeJoueur.IA_MOYEN);
+                break;
+            case "Difficult AI":
+                J.nouveauJoueur(T1.getText(), TypeJoueur.IA_DIFFICILE);
+                break;
+        }
+        return true;
     }
 
-    public Joueur getJ2(){
-        if (T2.getText().compareTo("Name of Player 2") == 0) return null;
-        return new Joueur(T2.getText(), GroupJ2.getSelection().getActionCommand() == "Human" ? false : true);
+    public boolean getJ2(){
+        if (T2.getText().compareTo("Name of Player 2") == 0) return false;
+        switch (GroupJ2.getSelection().getActionCommand()) {
+            case "Human":
+                J.nouveauJoueur(T2.getText(), TypeJoueur.HUMAIN);
+                break;
+            case "Easy AI":
+                J.nouveauJoueur(T2.getText(), TypeJoueur.IA_FACILE);
+                break;
+            case "Medium AI":
+                J.nouveauJoueur(T2.getText(), TypeJoueur.IA_MOYEN);
+                break;
+            case "Difficult AI":
+                J.nouveauJoueur(T2.getText(), TypeJoueur.IA_DIFFICILE);
+                break;
+        }
+        return true;
     }
 }

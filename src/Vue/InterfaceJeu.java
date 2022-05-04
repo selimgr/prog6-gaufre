@@ -42,7 +42,7 @@ public class InterfaceJeu extends InterfaceGraphique {
         frame.setVisible(true);
 
         // Vérification des noms et taille
-        System.out.println("Taille de la gauffre : (" + J.n.lignes() + "," + J.n.colonnes() + ")");
+        System.out.println("Taille de la gauffre : (" + J.niveau().lignes() + "," + J.niveau().colonnes() + ")");
         
         jPanel3 = new JPanel();
         gaufrePanel = new JPanel();
@@ -104,7 +104,7 @@ public class InterfaceJeu extends InterfaceGraphique {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-        currentPlayer.setText("Le joueur " + (J.getPlayer(J.getPlayer()).getPlayerName()) + (J.getPlayer(J.getPlayer()).isAI() == true ? " (AI)" : "")  + " est entrain de jouer");
+        currentPlayer.setText("Le joueur " + (J.nomJoueurActuel() + (J.typeJoueurActuel() != TypeJoueur.HUMAIN ? " (AI)" : "")  + " est entrain de jouer"));
         jPanel2.add(currentPlayer, java.awt.BorderLayout.CENTER);
 
         this.frame.getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);

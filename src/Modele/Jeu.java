@@ -8,7 +8,7 @@ public class Jeu extends Observable {
     boolean partieCommencee;
     boolean partieTerminee;
 
-    Jeu() {
+    public Jeu() {
         q = new Etat();
     }
 

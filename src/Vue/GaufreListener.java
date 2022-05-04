@@ -1,4 +1,6 @@
 package Vue;
+import Modele.TypeJoueur;
+
 import java.awt.event.*;
 
 public class GaufreListener extends MouseListener {
@@ -12,16 +14,15 @@ public class GaufreListener extends MouseListener {
         int x = ( e.getY() / t.hauteurCase);
 
         // System.out.println(x + "," + y);
-        if (t.G.coup(x, y)) {
+        if (t.G.jouerCoup(x, y)) {
             if (t.G.partieTerminee()) {
-                t.IJ.currentPlayer.setText("Partie terminée! Gagnant: " + (t.G.getPlayer(t.G.getPlayer()+1).getPlayerName()));
+                t.IJ.currentPlayer.setText("Partie terminée! Gagnant: " + (t.G.nomJoueurSuivant()));
             } else {
-                t.IJ.currentPlayer.setText("Le joueur " + (t.G.getPlayer(t.G.getPlayer()).getPlayerName()) + (t.G.getPlayer(t.G.getPlayer()).isAI() == true ? " (AI)" : "")  + " est entrain de jouer");
+                t.IJ.currentPlayer.setText("Le joueur " + (t.G.nomJoueurActuel()) + (t.G.typeJoueurActuel() != TypeJoueur.HUMAIN ? " (AI)" : "")  + " est entrain de jouer");
             }
         } else {
             t.IJ.currentPlayer.setText("Impossible de jouer le coup (?)");
         }
         t.repaint();
-
     }
 }

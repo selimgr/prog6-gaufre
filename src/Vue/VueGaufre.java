@@ -24,8 +24,8 @@ public class VueGaufre extends JComponent {
 
 		largeurCase = Math.min(largeurCase, hauteurCase);	
 
-        for (int l = 0; l < N.contenu.size(); l++) {
-            for (int c = 0; c < N.contenu.get(l); c++) {
+        for (int l = 0; l < N.getContenu().size(); l++) {
+            for (int c = 0; c < N.getContenu().get(l); c++) {
                 int x = c * largeurCase;
 				int y = l * hauteurCase;
 

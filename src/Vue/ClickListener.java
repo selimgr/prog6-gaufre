@@ -26,14 +26,12 @@ public class ClickListener implements ActionListener{
                 int l = Integer.parseInt(M.getLigne().getText());
                 int c = Integer.parseInt(M.getColonne().getText());
 
-                Joueur J1 = M.getJ1(), J2 = M.getJ2();
-                
-                if (J1 == null || J2 == null) {
+                if (!M.getJ1() || !M.getJ2()) {
                     JOptionPane.showMessageDialog(M.frame, "Joueurs incorrects oww!");
                     return;
                 }
 
-                M.J.nouvellePartie(l, c, J1, J2);
+                M.J.nouvellePartie(l, c);
                 M.fermer();
                 InterfaceJeu.demarrer(M.J);
             }

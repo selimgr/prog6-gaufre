@@ -185,12 +185,8 @@ public class InterfaceMenu extends InterfaceGraphique {
     }
 
     public int getDifficult(int joueur) {
-        if (joueur == 1) {
-            return Integer.parseInt(this.GroupJ1.getSelection().getActionCommand());
-        } else if (joueur == 2) {
-            return Integer.parseInt(this.GroupJ2.getSelection().getActionCommand());
-        }
-        return -1;
+        if (joueur < 1 || joueur > 2) return -1;
+        return Integer.parseInt((joueur == 1 ? this.GroupJ1 : this.GroupJ2).getSelection().getActionCommand());
     }
 
 }

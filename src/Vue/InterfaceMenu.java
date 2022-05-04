@@ -167,11 +167,34 @@ public class InterfaceMenu extends InterfaceGraphique {
     // Permet de récupérer le Joueur/IA
     public Joueur getJ1() {
         if (T1.getText().compareTo("Name of Player 1") == 0) return null;
-        return new Joueur(T1.getText(), GroupJ1.getSelection().getActionCommand() == "Human" ? false : true);
+        return new Joueur(T1.getText(), this.AI(1), this.getDifficult(1));
     }
 
     public Joueur getJ2(){
         if (T2.getText().compareTo("Name of Player 2") == 0) return null;
-        return new Joueur(T2.getText(), GroupJ2.getSelection().getActionCommand() == "Human" ? false : true);
+        return new Joueur(T2.getText(), this.AI(2), this.getDifficult(2));
     }
+
+    public boolean AI(int joueur){
+        if(joueur==1){
+            return (!b1[0].isSelected());
+        }else if(joueur==2){
+            return (!b2[0].isSelected());
+        }
+        return false;
+    }
+
+    public int getDifficult(int joueur){
+        if(joueur==1){
+            if(b1[1].isSelected()){return 0;}
+            if(b1[2].isSelected()){return 1;}
+            if(b1[3].isSelected()){return 2;}
+        }else if(joueur==2){
+            if(b2[1].isSelected()){return 0;}
+            if(b2[2].isSelected()){return 1;}
+            if(b2[3].isSelected()){return 2;}
+        }
+        return -1;
+    }
+
 }

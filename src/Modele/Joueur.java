@@ -1,13 +1,18 @@
 package Modele;
 
+import Controller.IA;
+
 public class Joueur {
     
     boolean isAI;
     String name;
 
-    public Joueur(String N, boolean AI) {
+    int difficulteIA; // 0 = facile, 1 = moyen, 2 difficile
+
+    public Joueur(String N, boolean AI, int diff) {
         this.name = N;
         this.isAI = AI;
+        difficulteIA=diff;
     }
     
     // Getters
@@ -18,5 +23,9 @@ public class Joueur {
 
     public boolean isAI() {
         return isAI;
+    }
+
+    public int getDifficulteIA(){
+        return difficulteIA;
     }
 }
